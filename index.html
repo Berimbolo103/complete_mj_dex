@@ -90,11 +90,10 @@
         .hand { display: flex; gap: 2px; justify-content: center; flex-wrap: nowrap; z-index: 20; }
         .exposed { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; min-height: 40px;}
         
-        /* Fixed Bottom Hand so it doesn't stretch wide into side players */
+        /* Fixed Bottom Hand */
         #player-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 50%; max-width: 900px; padding: 15px 25px; background: rgba(255, 255, 255, 0.75); z-index: 30;}
         #player-top { top: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 300px;}
         
-        /* Shifted side players up slightly to clear bottom hand */
         #player-left { left: 10px; top: 40%; transform: translateY(-50%); flex-direction: row; align-items: flex-start;}
         #player-left .hand { flex-direction: column; }
         #player-left .exposed { flex-direction: column; margin-bottom: 0; margin-right: 8px; }
@@ -103,7 +102,7 @@
         #player-right .hand { flex-direction: column; }
         #player-right .exposed { flex-direction: column; margin-bottom: 0; margin-left: 8px; }
 
-        /* AUTHENTIC DISCARD GRID (Fixed Overlap Issue) */
+        /* AUTHENTIC DISCARD GRID */
         .discard-area {
             position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
             width: 360px; height: 360px; z-index: 5;
@@ -113,7 +112,6 @@
             width: 150px; height: 100px; background: rgba(255,255,255,0.4); border-radius: 12px; padding: 8px;
             box-sizing: border-box; border: 1px dashed rgba(255,255,255,0.8);
         }
-        /* Adjusted positioning so they cleanly box each other */
         #discard-0 { bottom: 20px; left: 50%; transform: translateX(-50%); justify-content: flex-start; }
         #discard-1 { right: -25px; top: 50%; transform: translateY(-50%) rotate(-90deg); justify-content: flex-start; }
         #discard-2 { top: 20px; left: 50%; transform: translateX(-50%) rotate(180deg); justify-content: flex-start; }
@@ -155,7 +153,6 @@
         .exposed .tile { width: 30px; height: 42px; font-size: 28px; border-bottom-width: 2px; }
         #player-left .exposed .tile, #player-right .exposed .tile { width: 42px; height: 30px; border-bottom-width: 1px; border-right-width: 3px; }
 
-        /* Smaller Discard Tiles to fit securely in the zone */
         .discard-zone .tile { width: 22px; height: 32px; font-size: 20px; margin: 0; border-bottom-width: 2px; z-index: 2;}
 
         /* THE MENU OVERLAY */
@@ -178,10 +175,14 @@
         /* MODERN POPUP OVERLAY */
         #action-overlay {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.6); z-index: 9999; display: none; flex-direction: column; align-items: center;
-            width: 100vw; height: 100vh; justify-content: center; backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.2); z-index: 9999; display: none; flex-direction: column; align-items: center;
+            width: 100vw; height: 100vh; justify-content: center; 
         }
-        .action-box { background: #fff; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 90vw; max-height: 90vh; overflow-y: auto;}
+        .action-box { 
+            background: #fff; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            max-width: 90vw; max-height: 90vh; overflow-y: auto;
+            margin-bottom: 20vh;
+        }
         .overlay-title { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 20px; text-align: center; width: 100%;}
         .overlay-target-tile { margin-bottom: 30px; transform: scale(1.6); display: flex; justify-content: center;}
         .action-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 20px;}
@@ -222,29 +223,35 @@
             .player-frame { padding: 4px; border-radius: 10px;}
             .frame-header { display: none; } 
             
-            /* Responsive Grid using viewport minimums (vmin) */
-            .discard-area { width: 50vmin; height: 50vmin; max-width: 300px; max-height: 300px; margin-top: -5vmin;}
-            .discard-zone { width: 22vmin; height: 14vmin; padding: 4px;}
-            #discard-1 { right: -3vmin; top: 50%; }
-            #discard-3 { left: -3vmin; top: 50%; }
-            .discard-zone .tile { width: 3.5vmin; height: 5.5vmin; font-size: 3.2vmin; border-bottom-width: 2px; margin: 1px;}
+            /* Center Discard Area */
+            .discard-area { width: 50vw; height: 50vw; max-width: 300px; max-height: 300px; margin-top: -2vh;}
+            .discard-zone { width: 23vw; height: 16vw; padding: 2px;}
+            #discard-1 { right: -4vw; top: 50%; }
+            #discard-3 { left: -4vw; top: 50%; }
+            .discard-zone .tile { width: 3.5vw; height: 5vw; font-size: 3vw; border-bottom-width: 2px; margin: 1px;}
 
-            /* Side Players kept high */
-            #player-left { left: 1vw; top: 35%; width: auto;}
-            #player-right { right: 1vw; top: 35%; width: auto;}
+            /* Side Players */
+            #player-left { left: 1vw; top: 40%; width: auto;}
+            #player-right { right: 1vw; top: 40%; width: auto;}
             #player-left .exposed, #player-right .exposed { flex-direction: column; gap: 2px; }
             #player-left .hand, #player-right .hand { flex-direction: column; gap: 1px; }
 
             /* AI Tile Sizing */
-            #player-top .facedown { width: 4vmin; height: 5.5vmin; border-width: 1px;}
-            #player-left .facedown, #player-right .facedown { width: 5.5vmin; height: 4vmin; border-width: 1px;}
-            .exposed .tile { width: 4.5vmin; height: 6vmin; font-size: 3.5vmin; border-bottom-width: 1px;}
-            #player-left .exposed .tile, #player-right .exposed .tile { width: 6vmin; height: 4.5vmin; font-size: 3.5vmin; border-right-width: 2px;}
+            #player-top .facedown { width: 4.5vw; height: 6vw; border-width: 1px;}
+            #player-left .facedown, #player-right .facedown { width: 6vw; height: 4.5vw; border-width: 1px;}
+            .exposed .tile { width: 4.5vw; height: 6vw; font-size: 3.5vw; border-bottom-width: 1px;}
+            #player-left .exposed .tile, #player-right .exposed .tile { width: 6vw; height: 4.5vw; font-size: 3.5vw; border-right-width: 2px;}
             
-            /* Bottom Player (You) auto wrapping cleanly */
-            #player-bottom { width: 96vw; max-width: 100%; bottom: 1vw; padding: 8px 4px; z-index: 50; box-sizing: border-box;}
-            #player-bottom .hand { flex-wrap: wrap; justify-content: center; gap: 2px;}
-            #player-bottom .hand .tile { width: 9vmin; height: 13vmin; font-size: 7vmin; border-bottom-width: 3px; border-radius: 4px;}
+            /* Bottom Player (You) locked to vw to prevent wrapping */
+            #player-bottom { width: 98vw; max-width: 100%; bottom: 1vw; padding: 8px 4px; z-index: 50; box-sizing: border-box;}
+            #player-bottom .hand { flex-wrap: nowrap; justify-content: center; gap: 1px;}
+            #player-bottom .hand .tile { 
+                width: 6.2vw; 
+                height: 9vw; 
+                font-size: 4.5vw; 
+                border-bottom-width: 2px; 
+                border-radius: 4px;
+            }
             #player-bottom .hand .tile:last-child.drawn-tile { margin-left: 2vw;}
             
             /* Popups */
@@ -260,17 +267,20 @@
             .menu-btn { font-size: 12px; padding: 12px; }
         }
 
-        /* PORTRAIT OVERRIDES (Vertical Stacking) */
+        /* PORTRAIT OVERRIDES */
         @media screen and (max-width: 1000px) and (orientation: portrait) {
             .board { height: 80vh; min-height: 500px; padding: 2px;}
             #player-top { top: 2vh; }
         }
 
-        /* LANDSCAPE OVERRIDES (Wide fitting) */
+        /* LANDSCAPE OVERRIDES */
         @media screen and (max-width: 1000px) and (orientation: landscape) {
             .board { height: 85vh; min-height: 300px; }
             #player-bottom .hand { flex-wrap: nowrap; }
-            #player-bottom .hand .tile { width: 7vmin; height: 10vmin; font-size: 5.5vmin; }
+            #player-bottom .hand .tile { width: 6vh; height: 8.5vh; font-size: 5vh; }
+            .discard-area { width: 45vh; height: 45vh; }
+            .discard-zone { width: 20vh; height: 14vh; }
+            .discard-zone .tile { width: 3vh; height: 4.5vh; font-size: 2.5vh; }
         }
     </style>
 </head>
@@ -314,10 +324,10 @@
     <div id="scoreboard">
         <div class="score-title" id="round-indicator">ROUND: 東</div>
         <div class="score-nodes-wrapper">
-            <div class="score-node" id="score-0"><span class="score-name">PLAYER 1 (東 - YOU)</span><span class="score-bal">300</span></div>
-            <div class="score-node" id="score-1"><span class="score-name">PLAYER 2 (南)</span><span class="score-bal">300</span></div>
-            <div class="score-node" id="score-2"><span class="score-name">PLAYER 3 (西)</span><span class="score-bal">300</span></div>
-            <div class="score-node" id="score-3"><span class="score-name">PLAYER 4 (北)</span><span class="score-bal">300</span></div>
+            <div class="score-node" id="score-0"><span class="score-name" id="score-name-0">PLAYER 1 (東 - YOU)</span><span class="score-bal">300</span></div>
+            <div class="score-node" id="score-1"><span class="score-name" id="score-name-1">PLAYER 2 (南)</span><span class="score-bal">300</span></div>
+            <div class="score-node" id="score-2"><span class="score-name" id="score-name-2">PLAYER 3 (西)</span><span class="score-bal">300</span></div>
+            <div class="score-node" id="score-3"><span class="score-name" id="score-name-3">PLAYER 4 (北)</span><span class="score-bal">300</span></div>
         </div>
     </div>
 
@@ -334,17 +344,17 @@
         <div class="board">
             
             <div id="player-top" class="player-frame">
-                <div class="frame-header">PLAYER 3 (西)</div>
+                <div class="frame-header" id="frame-header-2">PLAYER 3 (西)</div>
                 <div class="exposed" id="exposed-2"></div><div class="hand" id="hand-2"></div>
             </div>
             
             <div id="player-left" class="player-frame">
-                <div class="frame-header">PLAYER 4 (北)</div>
+                <div class="frame-header" id="frame-header-3">PLAYER 4 (北)</div>
                 <div class="exposed" id="exposed-3"></div><div class="hand" id="hand-3"></div>
             </div>
             
             <div id="player-right" class="player-frame">
-                <div class="frame-header">PLAYER 2 (南)</div>
+                <div class="frame-header" id="frame-header-1">PLAYER 2 (南)</div>
                 <div class="exposed" id="exposed-1"></div><div class="hand" id="hand-1"></div>
             </div>
             
@@ -364,7 +374,7 @@
             </div>
             
             <div id="player-bottom" class="player-frame">
-                <div class="frame-header">PLAYER 1 (東 - YOU)</div>
+                <div class="frame-header" id="frame-header-0">PLAYER 1 (東 - YOU)</div>
                 <div id="action-buttons-container" style="display: none; gap: 8px; margin-bottom: 10px; width: 100%; justify-content: center;">
                     <button class="btn-hu" onclick="forceHuCheck()">DECLARE HU</button>
                     <button style="background:#1e90ff; color:#fff;" onclick="scanWaitProjections()">TING WAITS</button>
@@ -394,7 +404,6 @@
         // ==========================================
         // CUSTOM IMAGE CONFIGURATION
         // ==========================================
-        // Put your GitHub Raw URL folder here. Remember the trailing slash (/)!
         const GITHUB_TILE_BASE_URL = ""; 
 
         function handleBgUpload(event) {
@@ -596,8 +605,15 @@
 
                     let totalTriplets = exposedTriplets + (form.valid ? form.triplets : 0);
                     let totalChows = exposedChows + (form.valid ? form.chows : 0);
-                    if (form.valid && totalTriplets === 4 && !hasExposedMelds) return { isHu: true, breakdown: "> Si An Ke (4 Concealed Triplets) : +5 Tai\n-----------------------\n> TOTAL TAI : 5 (Max)", tai: 5 };
-                    else if (form.valid && totalChows === 0 && !is7Pairs) scoring.push({name: "Pong Pong Hu (All Triplets)", tai: 2});
+                    
+                    let isAllTriplets = (form.valid && totalChows === 0 && !is7Pairs && totalTriplets === 4);
+                    if (isAllTriplets) {
+                        if (!hasExposedMelds) {
+                            return { isHu: true, breakdown: "> Si An Ke (Men Qing Pong Pong Hu) : +5 Tai\n-----------------------\n> TOTAL TAI : 5 (Max)", tai: 5 };
+                        } else {
+                            scoring.push({name: "Pong Pong Hu (Exposed Triplets)", tai: 2});
+                        }
+                    }
 
                     if (form.valid && totalTriplets === 0 && !is7Pairs) {
                         if (!isSingleWait) {
@@ -703,6 +719,7 @@
         let chips = [300, 300, 300, 300]; let dealer = 0; let roundWind = 0; 
         let gameState = 'INIT'; let selectedSwaps = []; let swapCount = 0; let pendingHuResult = null; 
         let totalDiscardsThisRound = 0; let discardsByPlayer = [0, 0, 0, 0]; let isReplacementDraw = false; let lastDiscardedTile = null; let missedHuCount = 0; let auditLog = [];
+        let revealHands = false;
 
         function getSeatWind(playerIndex) { return (playerIndex - dealer + 4) % 4; }
         function getWindName(index) { return ['東', '南', '西', '北'][index]; }
@@ -721,11 +738,18 @@
 
         function updateLedgerUI() {
             document.getElementById('round-indicator').innerText = `ROUND: ${getWindName(roundWind)}`;
+            
             for(let i=0; i<4; i++) {
+                let windStr = getWindName(getSeatWind(i));
+                let title = i === 0 ? `PLAYER 1 (${windStr} - YOU)` : `PLAYER ${i+1} (${windStr})`;
+                
                 let el = document.getElementById(`score-${i}`);
-                let title = i === 0 ? "PLAYER 1 (東 - YOU)" : `PLAYER ${i+1} (${getWindName(getSeatWind(i))})`;
                 el.innerHTML = `<span class="score-name">${title}</span><span class="score-bal">${chips[i]}</span>`;
                 el.className = 'score-node'; if (i === dealer) el.classList.add('active-dealer');
+                
+                // Dynamically update the HTML labels so seat positions rotate properly visually
+                let frameHeader = document.getElementById(`frame-header-${i}`);
+                if (frameHeader) frameHeader.innerHTML = title + (i === dealer ? ' <span class="zhuang-badge">ZHUANG</span>' : '');
             }
         }
 
@@ -785,6 +809,7 @@
             hands = { 0: [], 1: [], 2: [], 3: [] }; exposed = { 0: [], 1: [], 2: [], 3: [] }; discardPiles = { 0: [], 1: [], 2: [], 3: [] };
             turn = dealer; swapCount = 0; selectedSwaps = []; pendingHuResult = null;
             isReplacementDraw = false; totalDiscardsThisRound = 0; discardsByPlayer = [0,0,0,0]; missedHuCount = 0; humanJustDrawn = false;
+            revealHands = false;
             updateLedgerUI();
             
             buildDeck(); hideOverlay();
@@ -854,8 +879,30 @@
             let summaryLines = pendingHuResult.breakdown.split('\n').filter(l=>l.includes('> ')); let methodStr = summaryLines.length > 0 ? summaryLines[0].replace('> ', '') : "Win";
             
             auditLog.unshift({ round: getWindName(roundWind), winner: winnerName, source: sourceName, tai: pendingHuResult.tai, method: methodStr }); if (auditLog.length > 6) auditLog.pop(); updateAuditLogUI();
-            if (winnerIndex !== dealer) { dealer = (dealer + 1) % 4; if (dealer === 0) roundWind = (roundWind + 1) % 4; } updateLedgerUI();
-            let logHtml = `<div class="terminal-log"><strong>WINNER:</strong> ${winnerName}<br><strong>SOURCE:</strong> ${sourceName}<br><br>${pendingHuResult.breakdown.replace(/\n/g, '<br>')}<br><br><strong>TOTAL PAYOUT:</strong> +${payout}</div>`;
+            
+            // Advance the Dealer correctly based on online rotation mechanics
+            if (winnerIndex !== dealer) { 
+                dealer = (dealer + 1) % 4; 
+                // Only shift the Round Prevailing Wind if East returns to Player 1 
+                if (dealer === 0) roundWind = (roundWind + 1) % 4; 
+            } 
+            updateLedgerUI();
+
+            // Set flag to render AI cards face up, then generate HTML for popup.
+            revealHands = true; gameState = 'GAMEOVER'; renderAll();
+            
+            let winningHandHtml = hands[winnerIndex].map(t => getTileHTML(t)).join('');
+            if (shooterIndex !== null && winnerIndex !== shooterIndex) {
+                winningHandHtml += `<span style="margin: 0 10px; font-weight: bold; font-size:24px; color:#ff4757; align-self:center;">+</span>` + getTileHTML(lastDiscardedTile);
+            }
+
+            let logHtml = `<div class="terminal-log" style="text-align:center;">
+                <strong>WINNER:</strong> ${winnerName}<br>
+                <strong>SOURCE:</strong> ${sourceName}<br>
+                <div style="display:flex; gap:2px; margin: 15px 0; justify-content:center;">${winningHandHtml}</div>
+                <div style="text-align:left;">${pendingHuResult.breakdown.replace(/\n/g, '<br>')}</div><br>
+                <strong>TOTAL PAYOUT:</strong> +${payout}
+            </div>`;
             document.getElementById('status').innerText = `ROUND OVER: ${winnerName} WON!`; showOverlay(`${logHtml}<button class="btn-hu" onclick="initRound()">NEXT ROUND</button>`, null, "MATCH RESULT");
         }
 
@@ -885,7 +932,13 @@
 
         function renderAll() {
             for(let i=0; i<4; i++) { document.getElementById(`discard-${i}`).innerHTML = discardPiles[i].map(t => getTileHTML(t, false, true)).join(''); }
-            for(let i=1; i<=3; i++) { document.getElementById(`hand-${i}`).innerHTML = hands[i].map(() => `<div class="facedown"></div>`).join(''); document.getElementById(`exposed-${i}`).innerHTML = exposed[i].map(renderMeldHtml).join(''); }
+            for(let i=1; i<=3; i++) { 
+                let handHtml = '';
+                if (revealHands) { handHtml = hands[i].map(t => getTileHTML(t)).join(''); } 
+                else { handHtml = hands[i].map(() => `<div class="facedown"></div>`).join(''); }
+                document.getElementById(`hand-${i}`).innerHTML = handHtml; 
+                document.getElementById(`exposed-${i}`).innerHTML = exposed[i].map(renderMeldHtml).join(''); 
+            }
             const humanHand = document.getElementById('hand-0'); humanHand.innerHTML = '';
             hands[0].forEach((tile, index) => {
                 let divStr = getTileHTML(tile); let tempDiv = document.createElement('div'); tempDiv.innerHTML = divStr; let actualDiv = tempDiv.firstChild;
@@ -938,27 +991,41 @@
                 exposed[i].forEach(m => { let first = m.replace(/\*/g, '')[0]; if(first && ['D','B','C'].includes(first.charAt(0))) sCounts[first.charAt(0)]++; });
                 Object.keys(sCounts).forEach(k => { if(sCounts[k] >= 2) dangerSuits[k] += 500; }); 
             }
+            
             let bestIdx = valid[0].idx; let minScore = 99999;
             valid.forEach(v => {
                 let score = 0; let t = v.t; let cCount = h.filter(x => x === t).length;
-                if (cCount >= 2) score += 1000; let isHonour = WINDS.includes(t) || DRAGONS.includes(t);
+                if (cCount >= 2) score += 1000; // Priority to keep pairs and triplets
+                let isHonour = WINDS.includes(t) || DRAGONS.includes(t);
+                
                 if (!isHonour) {
-                    let suit = t.charAt(0); let num = parseInt(t.charAt(1)); score += dangerSuits[suit] || 0;
-                    if (h.includes(suit+(num+1))) score += 200; if (h.includes(suit+(num-1))) score += 200; if (num === 1 || num === 9) score -= 50;
-                } else { if (cCount === 1) score -= 100; }
+                    let suit = t.charAt(0); let num = parseInt(t.charAt(1)); 
+                    score += dangerSuits[suit] || 0; 
+                    if (h.includes(suit+(num+1))) score += 400; // Prioritize adjacent sequences
+                    if (h.includes(suit+(num-1))) score += 400; 
+                    if (h.includes(suit+(num+2))) score += 150; // Keep gaps
+                    if (h.includes(suit+(num-2))) score += 150; 
+                    if (num === 1 || num === 9) score -= 50;    // Dump terminals faster than middle tiles
+                } else { 
+                    if (cCount === 1) score -= 200; // Dump isolated honors fast
+                }
+                
                 if (score < minScore) { minScore = score; bestIdx = v.idx; }
             });
-            if(Math.random() < 0.2) return valid[Math.floor(Math.random() * valid.length)].idx; return bestIdx;
+            // Reduced random deviation so AI plays smarter
+            if(Math.random() < 0.1) return valid[Math.floor(Math.random() * valid.length)].idx; 
+            return bestIdx;
         }
 
         function doAiTurn() {
             if (mainDeck.length === 0) { triggerDraw(); return; } document.getElementById('status').innerText = `Player ${turn+1} is thinking...`;
             let drawn = drawTile(turn); if (!drawn) { triggerDraw(); return; } renderAll();
+            let delay = activeMode === 'QYS' ? 150 : 300; 
             setTimeout(() => {
                 let discardIdx = getAiDiscard(turn); const discarded = hands[turn].splice(discardIdx, 1)[0];
                 discardsByPlayer[turn]++; totalDiscardsThisRound++; lastDiscardedTile = discarded; currentDiscarder = turn;
                 discardPiles[turn].push(discarded); renderAll(); processClaims(discarded, turn); 
-            }, 800);
+            }, delay);
         }
 
         function getAllChiOptions(hand, tile) {
@@ -1020,12 +1087,13 @@
             let exposedStr = discardedTile+discardedTile+discardedTile;
             if (type === 'chi') { let suit = [DOTS, BAMS, CHARS].find(s => s.includes(discardedTile)); let meldArr = [usedTiles[0], discardedTile, usedTiles[1]]; meldArr.sort((a,b) => suit.indexOf(a) - suit.indexOf(b)); exposedStr = meldArr.join(''); }
             exposed[aiIndex].push(exposedStr); renderAll(); turn = aiIndex;
+            let delay = activeMode === 'QYS' ? 200 : 450; 
             setTimeout(() => {
                 let validDiscards = hands[turn].map((tile, idx) => ({ tile, idx })).filter(item => item.tile !== FEI);
                 if (validDiscards.length === 0) validDiscards = [{ idx: 0 }];
                 const randomChoice = Math.floor(Math.random() * validDiscards.length); const discarded = hands[turn].splice(validDiscards[randomChoice].idx, 1)[0];
                 discardPiles[turn].push(discarded); renderAll(); processClaims(discarded, turn); 
-            }, 1200); 
+            }, delay); 
         }
 
         function executeHumanClaim(type, tile) {
