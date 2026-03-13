@@ -167,7 +167,7 @@
             width: 100%; padding: 18px; margin: 8px 0; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px;
             font-size: 16px; font-weight: bold; cursor: pointer; color: #334155; transition: 0.2s;
         }
-        .menu-btn:hover { background: #f1f5f9; border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05); }
+        .menu-btn:hover { background: #f1f5f9; border-color: #3b82f6; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05); }
 
         /* MODERN POPUP OVERLAY */
         #action-overlay {
@@ -207,7 +207,6 @@
         #toast-container { position: fixed; top: 85px; left: 50%; transform: translateX(-50%); z-index: 999999; display: flex; flex-direction: column; gap: 8px; pointer-events: none;}
         .toast { background: rgba(30, 41, 59, 0.95); color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); animation: toastFadeInOut 3.5s forwards; border-left: 4px solid #f59e0b;}
         @keyframes toastFadeInOut { 0% { opacity: 0; transform: translateY(-20px); } 10% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
-
 
         /* ========================================================= */
         /* ABSOLUTE MOBILE OPTIMIZATION (FLAWLESS RESPONSIVE DESIGN) */
@@ -449,7 +448,7 @@
     </div>
 
     <div style="width: 100%; text-align: center; color: #94a3b8; font-size: 12px; font-weight: bold; margin-bottom: 20px;">
-        Mahjong Trainer Pro © 2026, by Dexter
+        Mahjong Trainer Pro © 2026
     </div>
 
     <script>
@@ -568,14 +567,17 @@
             _evaluateCore(hand, exposedRaw, isZiMo, seatWind, roundWind, winningTile, gameFlags) {
                 let feiCount = hand.filter(t => t === this.FEI).length;
                 let natHand = hand.filter(t => t !== this.FEI).map(t => this.TILE_MAP[t] || t);
-                let natExposedSets = []; let exposedTriplets = 0; let exposedChows = 0; let hasBonus = false; let bonusTai = 0;
-                let mySeatFlower = this.FLOWERS[seatWind]; let hasExposedMelds = false; let kongCount = 0;
+                let natExposedSets = []; let exposedTriplets = 0; let exposedChows = 0; let bonusTai = 0;
+                
+                // FIXED: Match BOTH Plant and Season flower arrays for the specific seat
+                let mySeatFlowers = [this.FLOWERS[seatWind], this.FLOWERS[seatWind + 4]]; 
+                let hasExposedMelds = false; let kongCount = 0;
 
                 exposedRaw.forEach(meld => {
                     let isAnKong = meld.includes('*'); let clean = meld.replace(/\*/g, '');
                     Array.from(clean).forEach(char => {
-                        if (this.ANIMALS.includes(char)) { hasBonus = true; bonusTai++; }
-                        if (this.FLOWERS.includes(char)) { hasBonus = true; if (char === mySeatFlower) bonusTai++; }
+                        if (this.ANIMALS.includes(char)) { bonusTai++; }
+                        if (this.FLOWERS.includes(char)) { if (mySeatFlowers.includes(char)) bonusTai++; }
                     });
                     let firstChar = Array.from(clean)[0];
                     if (firstChar && !this.FLOWERS.includes(firstChar) && !this.ANIMALS.includes(firstChar) && firstChar !== this.FEI) {
@@ -677,9 +679,12 @@
                         }
                     }
 
+                    // FIXED: Ping Hu allows single waits IF it is a self-draw (isZiMo)
                     if (form.valid && totalTriplets === 0 && !is7Pairs) {
-                        if (!isSingleWait) {
-                            if (hasBonus || hasHonors || exposedTriplets > 0) scoring.push({name: "Chou Ping Hu (Dirty Sequence)", tai: 1}); else scoring.push({name: "Ping Hu (Pure Sequence)", tai: 4}); 
+                        if (!isSingleWait || isZiMo) {
+                            let hasBonusCheck = exposedRaw.some(m => m.match(/[\uD83C][\uDC00-\uDFFF]/) || m.match(/[\uD83D][\uDC00-\uDFFF]/)); 
+                            if (hasBonusCheck || hasHonors || exposedTriplets > 0) scoring.push({name: "Chou Ping Hu (Dirty Sequence)", tai: 1}); 
+                            else scoring.push({name: "Ping Hu (Pure Sequence)", tai: 4}); 
                         }
                     }
 
@@ -794,7 +799,7 @@
         function selectMode(mode) {
             pendingMode = mode;
             if (mode === 'QYS') {
-                startGame('QYS', 'hard'); // Skip difficulty for QYS
+                startGame('QYS', 'hard'); 
                 return;
             }
             document.getElementById('mode-selection-box').style.display = 'none';
@@ -1019,17 +1024,27 @@
 
         function triggerWin(winnerIndex, shooterIndex = null) {
             clearTimeout(turnTimer); hideOverlay(); if (!pendingHuResult) return;
+            
+            // Capture Current Round Winds before incrementing
+            let winnerWind = getWindName(getSeatWind(winnerIndex));
+            let winnerName = winnerIndex === 0 ? `PLAYER 1 (${winnerWind})` : `PLAYER ${winnerIndex+1} (${winnerWind})`;
+            
+            let sourceName = "SELF-DRAW";
+            if (shooterIndex !== null) {
+                let sourceWind = getWindName(getSeatWind(shooterIndex));
+                sourceName = shooterIndex === 0 ? `PLAYER 1 (${sourceWind})` : `PLAYER ${shooterIndex+1} (${sourceWind})`;
+            }
+
             let isZiMo = (shooterIndex === null); let t = pendingHuResult.tai; let payout = 0; let base = 0;
             if (isZiMo) { if(t===1) base = 4; else if(t===2) base = 5; else if(t===3) base = 7; else if(t===4) base = 12; else if(t>=5) base = 22; payout = base * 3; for(let i=0; i<4; i++) { if(i!==winnerIndex) chips[i] -= base; } chips[winnerIndex] += payout; } 
             else { if(t===2) payout = 7; else if(t===3) payout = 11; else if(t===4) payout = 20; else if(t>=5) payout = 40; chips[shooterIndex] -= payout; chips[winnerIndex] += payout; }
 
             let penalty = missedHuCount * 20; if (penalty > 0) chips[0] -= penalty;
-            let winnerName = winnerIndex === 0 ? "PLAYER 1 (東)" : `PLAYER ${winnerIndex+1}`;
-            let sourceName = isZiMo ? "SELF-DRAW" : (shooterIndex === 0 ? "PLAYER 1 (東)" : `PLAYER ${shooterIndex+1}`);
             let summaryLines = pendingHuResult.breakdown.split('\n').filter(l=>l.includes('> ')); let methodStr = summaryLines.length > 0 ? summaryLines[0].replace('> ', '') : "Win";
             
             auditLog.unshift({ round: getWindName(roundWind), winner: winnerName, source: sourceName, tai: pendingHuResult.tai, method: methodStr }); if (auditLog.length > 6) auditLog.pop(); updateAuditLogUI();
             
+            // Advance the Dealer correctly based on online rotation mechanics
             if (winnerIndex !== dealer) { 
                 dealer = (dealer + 1) % 4; 
                 if (dealer === 0) roundWind = (roundWind + 1) % 4; 
@@ -1356,4 +1371,3 @@
     </script>
 </body>
 </html>
-
