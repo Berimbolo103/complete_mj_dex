@@ -8,12 +8,12 @@
     <style>
         /* MODERN PROFESSIONAL UI (OUTER WRAPPER) */
         body { 
-            background-color: #f0f4f8; /* Crisp light slate-blue */
+            background-color: #f0f4f8; 
             color: #334155; 
             font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
             display: flex; flex-direction: column; align-items: center; 
             margin: 0; padding: 0 0 40px 0; font-size: 13px; touch-action: manipulation; 
-            overflow-x: hidden; min-height: 100vh;
+            overflow-x: hidden; min-height: 100vh; user-select: none;
             background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
             background-size: 24px 24px;
         }
@@ -72,7 +72,7 @@
             background-size: cover; background-position: center; border: 6px solid #172554;
         }
         
-        .board { position: relative; width: 100%; height: 75vh; min-height: 600px; max-height: 850px; overflow: hidden; display: flex; justify-content: center; align-items: center;}
+        .board { position: relative; width: 100%; height: 75vh; min-height: 550px; overflow: hidden; display: flex; justify-content: center; align-items: center;}
 
         /* Modern Frosted Player Panels */
         .player-frame {
@@ -87,16 +87,14 @@
         .zhuang-badge { color: #fff; margin-left: 5px; font-weight: 900; background: #ef4444; padding: 2px 6px; border-radius: 6px; font-size: 10px;}
         
         .hand { display: flex; gap: 2px; justify-content: center; flex-wrap: nowrap; z-index: 20; }
-        .exposed { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; min-height: 40px;}
+        .exposed { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; min-height: 40px;}
         
-        /* Bottom Player Panel */
-        #player-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 50%; max-width: 900px; padding: 15px 25px; background: rgba(255, 255, 255, 0.95); z-index: 30;}
+        /* Positioning */
+        #player-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 50%; max-width: 900px; padding: 15px 25px; background: rgba(255, 255, 255, 0.95); z-index: 100;}
         #player-top { top: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 300px;}
-        
         #player-left { left: 10px; top: 40%; transform: translateY(-50%); flex-direction: row; align-items: flex-start;}
         #player-left .hand { flex-direction: column; }
         #player-left .exposed { flex-direction: column; margin-bottom: 0; margin-right: 8px; }
-        
         #player-right { right: 10px; top: 40%; transform: translateY(-50%); flex-direction: row-reverse; align-items: flex-start;}
         #player-right .hand { flex-direction: column; }
         #player-right .exposed { flex-direction: column; margin-bottom: 0; margin-left: 8px; }
@@ -120,7 +118,7 @@
         .tile { 
             background-color: #fdfdfd; color: #0f172a; border: 1px solid #94a3b8; border-bottom: 4px solid #cbd5e1;
             width: 34px; height: 48px; display: flex; justify-content: center; align-items: center; 
-            font-size: 34px; cursor: default; user-select: none; overflow: hidden; line-height: 1;
+            font-size: 34px; cursor: default; overflow: hidden; line-height: 1;
             box-shadow: 1px 2px 4px rgba(0,0,0,0.2); font-family: Arial, sans-serif; flex-shrink: 0; position: relative;
             border-radius: 4px; box-sizing: border-box;
         }
@@ -162,14 +160,14 @@
         }
         .menu-box {
             background: #fff; border-radius: 16px; padding: 40px; width: 600px; color: #1e293b;
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2); text-align: center; max-width: 90vw; box-sizing: border-box; border: 2px solid #e2e8f0;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2); text-align: center; max-width: 90vw; max-height: 90vh; overflow-y: auto; box-sizing: border-box; border: 2px solid #e2e8f0;
         }
         .menu-title { font-size: 28px; font-weight: 900; color: #1e293b; margin-bottom: 10px; }
         .menu-btn {
             width: 100%; padding: 18px; margin: 8px 0; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px;
             font-size: 16px; font-weight: bold; cursor: pointer; color: #334155; transition: 0.2s;
         }
-        .menu-btn:hover { background: #f1f5f9; border-color: #3b82f6; transform: translateY(-3px); box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05); }
+        .menu-btn:hover { background: #f1f5f9; border-color: #3b82f6; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05); }
 
         /* MODERN POPUP OVERLAY */
         #action-overlay {
@@ -179,8 +177,8 @@
         }
         .action-box { 
             background: #fff; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
-            max-width: 90vw; max-height: 90vh; overflow-y: auto;
-            margin-bottom: 20vh; border: 1px solid #e2e8f0;
+            max-width: 90vw; max-height: 85vh; overflow-y: auto;
+            margin-bottom: 15vh; border: 1px solid #e2e8f0;
         }
         .overlay-title { font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 20px; text-align: center; width: 100%; text-transform: uppercase;}
         .overlay-target-tile { margin-bottom: 30px; transform: scale(1.6); display: flex; justify-content: center;}
@@ -210,68 +208,110 @@
         .toast { background: rgba(30, 41, 59, 0.95); color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); animation: toastFadeInOut 3.5s forwards; border-left: 4px solid #f59e0b;}
         @keyframes toastFadeInOut { 0% { opacity: 0; transform: translateY(-20px); } 10% { opacity: 1; transform: translateY(0); } 90% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); } }
 
+
         /* ========================================================= */
-        /* ABSOLUTE MOBILE OPTIMIZATION (GUARANTEED NO OVERLAP)      */
+        /* ABSOLUTE MOBILE OPTIMIZATION (FLAWLESS RESPONSIVE DESIGN) */
         /* ========================================================= */
 
         @media screen and (max-width: 1000px) {
-            body { padding: 0; background-size: 15px 15px;}
-            #game-header { flex-direction: column; gap: 10px; padding: 15px; margin-top: 5px; border-radius: 8px; width: 96vw;}
-            .header-right { text-align: center; width: 100%;}
-            #scoreboard { flex-direction: column; border-radius: 8px; width: 96vw;}
-            .score-nodes-wrapper { flex-wrap: wrap; }
-            .score-node { min-width: 50%; font-size: 11px; padding: 8px; border-bottom: 1px solid #e2e8f0; box-sizing: border-box;}
-            #dashboard-controls { flex-direction: column; text-align: center; gap: 12px; padding: 15px; border-radius: 8px; margin-bottom: 10px; width: 96vw;}
-            .board-container { width: 100vw; border-radius: 0; border-left: none; border-right: none;}
+            body { padding-bottom: 10px; background-size: 15px 15px;}
             
-            .player-frame { padding: 4px; border-radius: 8px;}
+            /* Header & Dashboard Wrappers */
+            #game-header, #scoreboard, #dashboard-controls { flex-direction: column; gap: 8px; padding: 12px; margin-top: 5px; border-radius: 8px; width: 96vw; text-align: center;}
+            .header-right { text-align: center; width: 100%;}
+            .score-nodes-wrapper { flex-wrap: wrap; }
+            .score-node { min-width: 50%; font-size: 11px; padding: 6px; border-bottom: 1px solid #e2e8f0; box-sizing: border-box;}
+            
+            /* Board Container & Mechanics */
+            .board-container { width: 100vw; border-radius: 0; border-left: none; border-right: none; margin-bottom: 10px;}
+            .player-frame { padding: 4px; border-radius: 6px;}
             .frame-header { display: none; } 
             
-            .discard-area { width: 50vw; height: 50vw; max-width: 300px; max-height: 300px; margin-top: -2vh;}
-            .discard-zone { width: 23vw; height: 16vw; padding: 2px;}
-            #discard-1 { right: -4vw; top: 50%; }
-            #discard-3 { left: -4vw; top: 50%; }
-            .discard-zone .tile { width: 3.5vw; height: 5vw; font-size: 3vw; border-bottom-width: 2px; margin: 1px;}
-
-            #player-left { left: 1vw; top: 40%; width: auto;}
-            #player-right { right: 1vw; top: 40%; width: auto;}
-            #player-left .exposed, #player-right .exposed { flex-direction: column; gap: 2px; }
-            #player-left .hand, #player-right .hand { flex-direction: column; gap: 1px; }
-
-            #player-top .facedown { width: 4.5vw; height: 6vw; border-width: 1px;}
-            #player-left .facedown, #player-right .facedown { width: 6vw; height: 4.5vw; border-width: 1px;}
-            .exposed .tile { width: 4.5vw; height: 6vw; font-size: 3.5vw; border-bottom-width: 1px;}
-            #player-left .exposed .tile, #player-right .exposed .tile { width: 6vw; height: 4.5vw; font-size: 3.5vw; border-right-width: 2px;}
-            
-            #player-bottom { width: 98vw; max-width: 100%; bottom: 1vw; padding: 8px 4px; z-index: 50; box-sizing: border-box;}
-            #player-bottom .hand { flex-wrap: nowrap; justify-content: center; gap: 1px;}
-            #player-bottom .hand .tile { width: 6.2vw; height: 9vw; font-size: 4.5vw; border-bottom-width: 2px; border-radius: 4px;}
-            #player-bottom .hand .tile:last-child.drawn-tile { margin-left: 2vw;}
-            
-            .action-box { padding: 15px; width: 95vw; }
-            .action-row { flex-direction: column; width: 100%; gap: 6px;}
+            /* Popups */
+            .menu-box { padding: 20px; width: 95vw; }
+            .menu-title { font-size: 20px; }
+            .menu-btn { font-size: 14px; padding: 12px; }
+            .action-box { padding: 15px; width: 95vw; margin-bottom: 5vh; }
             button { width: 100%; padding: 12px; font-size: 12px; margin: 0;}
             
+            /* Action Buttons Bottom (dynamic wrap) */
+            #action-buttons-container { flex-wrap: wrap; gap: 4px !important; }
+            #action-buttons-container button { flex: 1 1 45%; padding: 10px; }
+
+            /* Table History */
             #audit-history-container { width: 96vw; border-radius: 8px;}
             #audit-table { font-size: 10px; }
             #audit-table th, #audit-table td { padding: 6px; }
-            .menu-box { padding: 20px; width: 90vw;}
-            .menu-title { font-size: 18px; }
-            .menu-btn { font-size: 12px; padding: 12px; }
         }
 
+        /* --- MOBILE PORTRAIT OVERRIDES --- */
         @media screen and (max-width: 1000px) and (orientation: portrait) {
-            .board { height: 80vh; min-height: 500px; padding: 2px;}
-            #player-top { top: 2vh; }
+            .board { height: 70vh; min-height: 400px; padding: 2px;}
+            
+            /* Discard Area Centered precisely */
+            .discard-area { width: 55vw; height: 55vw; max-width: 250px; max-height: 250px; margin-top: -5vh;}
+            .discard-zone { width: 26vw; height: 16vw; padding: 2px;}
+            .discard-zone .tile { width: 3.8vw; height: 5.3vw; font-size: 3.5vw; margin: 1px; border-bottom-width: 2px;}
+            #discard-1 { right: -5vw; top: 50%; }
+            #discard-3 { left: -5vw; top: 50%; }
+
+            /* AI Players flush to edges */
+            #player-top { top: 5px; }
+            #player-left { left: 0; top: 40%; width: auto;}
+            #player-right { right: 0; top: 40%; width: auto;}
+            #player-left .exposed, #player-right .exposed { flex-direction: column; gap: 2px; }
+            #player-left .hand, #player-right .hand { flex-direction: column; gap: 1px; }
+
+            /* AI Tile Sizing */
+            #player-top .facedown { width: 4vw; height: 5.5vw; border-width: 1px;}
+            #player-left .facedown, #player-right .facedown { width: 5.5vw; height: 4vw; border-width: 1px;}
+            .exposed .tile { width: 4.2vw; height: 5.8vw; font-size: 3.5vw; border-bottom-width: 1px;}
+            #player-left .exposed .tile, #player-right .exposed .tile { width: 5.8vw; height: 4.2vw; font-size: 3.5vw; border-right-width: 2px;}
+            
+            /* Bottom Player (Strict sizing to prevent flex-wrap breakage) */
+            #player-bottom { width: 100vw; max-width: 100%; bottom: 0; padding: 8px 2px; box-sizing: border-box;}
+            #player-bottom .hand { flex-wrap: nowrap; justify-content: center; gap: 1px;}
+            #player-bottom .hand .tile { 
+                width: 6.4vw; /* 14 tiles * 6.4 = ~89.6vw, perfectly fits within 100vw */
+                height: 9.3vw; 
+                font-size: 5vw; 
+                border-bottom-width: 2px; 
+                border-radius: 4px;
+            }
+            #player-bottom .exposed .tile { width: 5vw; height: 7.2vw; font-size: 4vw; }
+            #player-bottom .meld { padding: 2px; gap: 1px; }
+            #player-bottom .hand .tile:last-child.drawn-tile { margin-left: 2vw;}
         }
 
+        /* --- MOBILE LANDSCAPE OVERRIDES --- */
         @media screen and (max-width: 1000px) and (orientation: landscape) {
-            .board { height: 85vh; min-height: 300px; }
-            #player-bottom .hand { flex-wrap: nowrap; }
-            #player-bottom .hand .tile { width: 6vh; height: 8.5vh; font-size: 5vh; }
-            .discard-area { width: 45vh; height: 45vh; }
-            .discard-zone { width: 20vh; height: 14vh; }
-            .discard-zone .tile { width: 3vh; height: 4.5vh; font-size: 2.5vh; }
+            .board { height: 85vh; min-height: 250px; }
+            
+            /* Discard Area scaled by VH */
+            .discard-area { width: 45vh; height: 45vh; margin-top: 0;}
+            .discard-zone { width: 21vh; height: 13vh; padding: 2px;}
+            .discard-zone .tile { width: 3vh; height: 4.5vh; font-size: 2.8vh; margin: 1px;}
+            #discard-1 { right: -4vh; top: 50%; }
+            #discard-3 { left: -4vh; top: 50%; }
+
+            /* AI Players */
+            #player-top { top: 2px; }
+            #player-left { left: 0; top: 45%; }
+            #player-right { right: 0; top: 45%; }
+            
+            /* AI Tile Sizing */
+            #player-top .facedown { width: 3.5vh; height: 5vh; border-width: 1px;}
+            #player-left .facedown, #player-right .facedown { width: 5vh; height: 3.5vh; border-width: 1px;}
+            .exposed .tile { width: 3.8vh; height: 5.5vh; font-size: 3.2vh; border-bottom-width: 1px;}
+            #player-left .exposed .tile, #player-right .exposed .tile { width: 5.5vh; height: 3.8vh; font-size: 3.2vh; border-right-width: 2px;}
+            
+            /* Bottom Player locked by VH */
+            #player-bottom { width: 100vw; max-width: 100%; bottom: 0; padding: 5px;}
+            #player-bottom .hand { flex-wrap: nowrap; justify-content: center; gap: 2px;}
+            #player-bottom .hand .tile { width: 6vh; height: 8.5vh; font-size: 4.5vh; border-bottom-width: 2px;}
+            #player-bottom .exposed .tile { width: 4.5vh; height: 6.5vh; font-size: 3.5vh; }
+            #player-bottom .meld { padding: 2px; gap: 1px; }
+            #player-bottom .hand .tile:last-child.drawn-tile { margin-left: 2vh;}
         }
     </style>
 </head>
@@ -753,6 +793,10 @@
         // --- MENU LOGIC ---
         function selectMode(mode) {
             pendingMode = mode;
+            if (mode === 'QYS') {
+                startGame('QYS', 'hard'); // Skip difficulty for QYS
+                return;
+            }
             document.getElementById('mode-selection-box').style.display = 'none';
             document.getElementById('diff-selection-box').style.display = 'block';
         }
@@ -813,7 +857,6 @@
         function processBonusYao(playerIdx, tile) {
             let pName = playerIdx === 0 ? "You" : `Player ${playerIdx+1}`;
             
-            // Check Spirit Animal
             if (ANIMALS.includes(tile)) {
                 if (assignedSpirits[playerIdx] === tile) {
                     let amt = isOpeningPhase ? 4 : 2;
@@ -825,13 +868,12 @@
                 }
             }
 
-            // Check Flower Biting
             if (FLOWERS.includes(tile)) {
                 let pairedFlower = FLOWER_PAIRS[tile];
                 let hasPair = exposed[playerIdx].some(m => m.includes(pairedFlower));
                 if (hasPair) {
                     let flowerNum = FLOWER_MAP[tile];
-                    let targetSeat = flowerNum - 1; // 1->0, 2->1, 3->2, 4->3
+                    let targetSeat = flowerNum - 1;
                     
                     if (targetSeat !== playerIdx) {
                         chips[targetSeat] -= 2;
@@ -863,7 +905,7 @@
         }
 
         function checkInstantFeiWin() {
-            if (activeMode === 'QYS' || activeMode === 'SIMPLE') return false; // No fei
+            if (activeMode === 'QYS' || activeMode === 'SIMPLE') return false; 
             for (let i = 0; i < 4; i++) {
                 if (hands[i].filter(t => t === FEI).length === 4) {
                     let isDealer = (i === dealer);
@@ -883,20 +925,17 @@
             isReplacementDraw = false; totalDiscardsThisRound = 0; discardsByPlayer = [0,0,0,0]; missedHuCount = 0; humanJustDrawn = false;
             revealHands = false; isOpeningPhase = true;
             
-            // Assign random spirit animals
             assignedSpirits = [...ANIMALS].sort(() => Math.random() - 0.5);
-            let sLog = `Your spirit animal this round: ${assignedSpirits[0]}`;
-            showToast(sLog);
+            showToast(`Your spirit animal this round: ${assignedSpirits[0]}`);
 
             updateLedgerUI();
             buildDeck(); hideOverlay();
             
-            // Initial 13 tiles + 1 for dealer
             for(let i=0; i<13; i++) { for(let p=0; p<4; p++) drawTile(p); }
             hands[0].sort(); drawTile(dealer); 
-            isOpeningPhase = false; // End of opening phase
+            isOpeningPhase = false; 
 
-            if (checkInstantFeiWin()) return; // Halt if someone instantly wins with 4 fei
+            if (checkInstantFeiWin()) return;
 
             if (activeMode === 'QYS' || activeMode === 'SIMPLE') { gameState = 'PLAY'; renderAll(); if (turn === 0) startHumanTurn(); else doAiTurn(); } 
             else { gameState = 'SWAP'; renderAll(); startSwapPhase(); }
@@ -906,7 +945,7 @@
 
         function toggleSwapSelection(index) {
             if (gameState !== 'SWAP' || !isHumanTurn) return;
-            let tile = hands[0][index]; if (tile === FEI) { alert("Jokers cannot be swapped."); return; }
+            let tile = hands[0][index]; if (tile === FEI) { showToast("Jokers cannot be swapped."); return; }
             let pos = selectedSwaps.indexOf(index);
             if (pos !== -1) { selectedSwaps.splice(pos, 1); } else if (selectedSwaps.length < 3) { selectedSwaps.push(index); }
             renderAll();
@@ -917,27 +956,24 @@
             let h = hands[aiIndex]; let suits = { D: 0, B: 0, C: 0 };
             
             if (aiDifficulty === 'hard') {
-                // Hard mode swap: Avoid breaking good shapes. Score each suit based on connectivity.
                 let suitScores = { D: 0, B: 0, C: 0 };
                 h.forEach(t => { 
                     if(t!==FEI && !WINDS.includes(t) && !DRAGONS.includes(t) && !isBonusTile(t)) {
                         suits[t.charAt(0)]++;
                         let suit = t.charAt(0); let num = parseInt(t.charAt(1));
                         suitScores[suit] += 1;
-                        if (h.includes(suit+(num+1))) suitScores[suit] += 3; // Adjacent sequence
-                        if (h.filter(x=>x===t).length >= 2) suitScores[suit] += 4; // Pair
+                        if (h.includes(suit+(num+1))) suitScores[suit] += 3; 
+                        if (h.filter(x=>x===t).length >= 2) suitScores[suit] += 4; 
                     }
                 });
                 
-                // Pick suit that has >=3 tiles but lowest connectivity score
                 let targetSuit = Object.keys(suits).filter(k => suits[k] >= 3).sort((a,b) => suitScores[a] - suitScores[b])[0];
-                if (!targetSuit) targetSuit = Object.keys(suits).reduce((a, b) => suits[a] < suits[b] ? a : b); // fallback
+                if (!targetSuit) targetSuit = Object.keys(suits).reduce((a, b) => suits[a] < suits[b] ? a : b); 
                 
                 let valid = h.filter(t => t!==FEI && t.charAt(0) === targetSuit);
                 if(valid.length < 3) { let remaining = h.filter(t => t!==FEI && !valid.includes(t)); valid.push(...remaining); }
                 let out = []; for(let i=0; i<3; i++) { let t = valid[i]; out.push(t); h.splice(h.indexOf(t), 1); } return out;
             } else {
-                // Normal/Easy swap
                 h.forEach(t => { if(t!==FEI && !WINDS.includes(t) && !DRAGONS.includes(t) && !isBonusTile(t)) suits[t.charAt(0)]++; });
                 let targetSuit = Object.keys(suits).reduce((a, b) => suits[a] < suits[b] ? a : b);
                 let valid = h.filter(t => t!==FEI && t.charAt(0) === targetSuit);
@@ -969,8 +1005,8 @@
 
         function zhaHu() {
             chips[0] -= 200; updateLedgerUI();
-            if (chips[0] <= 0) { alert("GAME OVER. YOU LOST ALL CHIPS."); chips = [300, 300, 300, 300]; dealer = 0; roundWind = 0; initRound(); } 
-            else { alert("ZHA HU (FALSE ALARM)! -200 Chips Penalty."); auditLog.unshift({ round: getWindName(roundWind), winner: "PENALTY", source: "Player 1", tai: "-", method: "ZHA HU (-200)"}); if (auditLog.length > 6) auditLog.pop(); updateAuditLogUI(); dealer = (dealer + 1) % 4; if (dealer === 0) roundWind = (roundWind + 1) % 4; initRound(); }
+            if (chips[0] <= 0) { alert("GAME OVER. YOU LOST ALL CHIPS."); chips = [300, 300, 300, 300]; dealer = 0; roundWind = 0; document.getElementById('menu-overlay').style.display='flex'; } 
+            else { showToast("ZHA HU (FALSE ALARM)! -200 Chips Penalty."); auditLog.unshift({ round: getWindName(roundWind), winner: "PENALTY", source: "Player 1", tai: "-", method: "ZHA HU (-200)"}); if (auditLog.length > 6) auditLog.pop(); updateAuditLogUI(); dealer = (dealer + 1) % 4; if (dealer === 0) roundWind = (roundWind + 1) % 4; initRound(); }
         }
 
         function showOverlay(htmlContent, targetTile = null, title = "ACTION REQUIRED") {
@@ -1002,7 +1038,7 @@
 
             revealHands = true; gameState = 'GAMEOVER'; renderAll();
             
-            let winningHandHtml = hands[winnerIndex].map(t => getTileHTML(t)).join('');
+            let winningHandHtml = hands[winnerIndex].map(tl => getTileHTML(tl)).join('');
             if (shooterIndex !== null && winnerIndex !== shooterIndex && lastDiscardedTile) {
                 winningHandHtml += `<span style="margin: 0 10px; font-weight: bold; font-size:24px; color:#ef4444; align-self:center;">+</span>` + getTileHTML(lastDiscardedTile);
             }
@@ -1010,7 +1046,7 @@
             let logHtml = `<div class="terminal-log" style="text-align:center;">
                 <strong>WINNER:</strong> ${winnerName}<br>
                 <strong>SOURCE:</strong> ${sourceName}<br>
-                <div style="display:flex; gap:2px; margin: 15px 0; justify-content:center;">${winningHandHtml}</div>
+                <div style="display:flex; flex-wrap:wrap; gap:2px; margin: 15px 0; justify-content:center;">${winningHandHtml}</div>
                 <div style="text-align:left;">${pendingHuResult.breakdown.replace(/\n/g, '<br>')}</div><br>
                 <strong>TOTAL PAYOUT:</strong> +${payout}
             </div>`;
@@ -1086,7 +1122,7 @@
 
         function playTile(index) {
             if (!isHumanTurn || gameState !== 'PLAY') return;
-            if (hands[0][index] === FEI) { document.getElementById('status').innerText = "INVALID ACTION: Jokers (飛) cannot be discarded."; return; }
+            if (hands[0][index] === FEI) { showToast("INVALID ACTION: Jokers (飛) cannot be discarded."); return; }
             isHumanTurn = false; isReplacementDraw = false; humanJustDrawn = false; hideOverlay();
             
             const discarded = hands[0].splice(index, 1)[0]; discardsByPlayer[0]++; totalDiscardsThisRound++;
@@ -1111,7 +1147,6 @@
             
             let dangerSuits = { D: 0, B: 0, C: 0 };
             
-            // Hard mode: Check if player 0 (human) is building a specific suit flush
             let extremeDangerSuit = null;
             if (aiDifficulty === 'hard') {
                 let p0Suits = { D: 0, B: 0, C: 0 };
@@ -1119,19 +1154,17 @@
                 Object.keys(p0Suits).forEach(k => { if(p0Suits[k] >= 2) extremeDangerSuit = k; });
             }
 
-            // Base general danger (Normal & Hard)
             for(let i=0; i<4; i++) {
                 if(i === aiIndex) continue; let sCounts = { D: 0, B: 0, C: 0 };
                 exposed[i].forEach(m => { let first = m.replace(/\*/g, '')[0]; if(first && ['D','B','C'].includes(first.charAt(0))) sCounts[first.charAt(0)]++; });
                 Object.keys(sCounts).forEach(k => { if(sCounts[k] >= 2) dangerSuits[k] += 500; }); 
             }
 
-            // Hard mode: Calculate if AI is strong enough to fight
             let isFighting = false;
             if (aiDifficulty === 'hard') {
                 let pairCount = 0;
                 h.forEach(t => { if (h.filter(x=>x===t).length >= 2) pairCount++; });
-                if (pairCount >= 3 || exposed[aiIndex].length >= 2) isFighting = true; // Reduced fear
+                if (pairCount >= 3 || exposed[aiIndex].length >= 2) isFighting = true; 
             }
             
             let bestIdx = valid[0].idx; let minScore = 99999;
@@ -1139,38 +1172,34 @@
             valid.forEach(v => {
                 let score = 0; let t = v.t; let cCount = h.filter(x => x === t).length;
                 
-                // Normal/Hard Difficulty additions: Live tile penalty
                 if (aiDifficulty === 'normal' || aiDifficulty === 'hard') {
                     let vis = countVisibleTiles(t);
-                    if (vis === 0) score += (aiDifficulty === 'hard' ? 800 : 300); // Penalty for unseen raw tiles
+                    if (vis === 0) score += (aiDifficulty === 'hard' ? 800 : 300); 
                 }
 
-                if (cCount >= 2) score += 1000; // Prioritize keeping pairs and triplets
+                if (cCount >= 2) score += 1000; 
                 let isHonour = WINDS.includes(t) || DRAGONS.includes(t);
                 
                 if (!isHonour) {
                     let suit = t.charAt(0); let num = parseInt(t.charAt(1)); 
-                    
                     score += dangerSuits[suit] || 0; 
                     
-                    // Hard Mode Extreme Flight vs Fight
                     if (aiDifficulty === 'hard' && extremeDangerSuit === suit) {
-                        score += isFighting ? 1000 : 5000; // If flight, absolutely refuse to throw this suit
+                        score += isFighting ? 1000 : 5000; 
                     }
 
-                    if (h.includes(suit+(num+1))) score += 400; // Keep adjacent sequences
+                    if (h.includes(suit+(num+1))) score += 400; 
                     if (h.includes(suit+(num-1))) score += 400; 
-                    if (h.includes(suit+(num+2))) score += 150; // Keep gaps
+                    if (h.includes(suit+(num+2))) score += 150; 
                     if (h.includes(suit+(num-2))) score += 150; 
-                    if (num === 1 || num === 9) score -= 50;    // Dump terminals faster than middle tiles
+                    if (num === 1 || num === 9) score -= 50;    
                 } else { 
-                    if (cCount === 1) score -= 200; // Dump isolated winds/dragons fast
+                    if (cCount === 1) score -= 200; 
                 }
                 
                 if (score < minScore) { minScore = score; bestIdx = v.idx; }
             });
 
-            // Randomness based on difficulty
             let randThreshold = aiDifficulty === 'easy' ? 0.2 : (aiDifficulty === 'normal' ? 0.05 : 0.01);
             if(Math.random() < randThreshold) return valid[Math.floor(Math.random() * valid.length)].idx; 
             return bestIdx;
@@ -1208,11 +1237,9 @@
                         let hRes = evaluator.evaluate([...hands[i], discardedTile], exposed[i], false, getSeatWind(i), roundWind, discardedTile, {isReplacementDraw: false, isTianHu: false, isDiHu: totalDiscardsThisRound === 1 && dealer === discardingPlayer, isRenHu: false});
                         if (hRes.isHu && hRes.tai >= 2) { pendingHuResult = hRes; triggerWin(i, discardingPlayer); return; }
                         
-                        // Hard mode logic for AI Ponging: Only pong if it helps the hand structure or if they are "fighting"
                         if (hands[i].filter(t => t === discardedTile).length >= 2) { 
                             let willPong = false;
                             if (aiDifficulty === 'hard') {
-                                // Hard mode: Pong mostly middle tiles or if it increases Tai
                                 let isHonour = WINDS.includes(discardedTile) || DRAGONS.includes(discardedTile);
                                 if (isHonour || Math.random() > 0.4) willPong = true;
                             } else {
