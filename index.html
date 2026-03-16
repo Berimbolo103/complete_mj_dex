@@ -170,11 +170,11 @@
             width: 98vw; max-width: 1400px; border-radius: 18px; position: relative;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6); box-sizing: border-box; margin-bottom: 14px;
             background: radial-gradient(ellipse at center, var(--felt2) 0%, var(--felt) 60%, #0a1f12 100%);
-            border: 6px solid var(--felt-border);
+            border: 6px solid var(--felt-border); overflow: visible;
         }
         .board {
-            position: relative; width: 100%; height: 75vh;
-            min-height: 600px; max-height: 850px; overflow: hidden;
+            position: relative; width: 100%; height: 80vh;
+            min-height: 680px; max-height: 920px; overflow: visible;
             display: flex; justify-content: center; align-items: center;
         }
         /* Center ornament */
@@ -212,7 +212,7 @@
         .exposed { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 5px; min-height: 40px; }
 
         /* Player positions */
-        #player-bottom { bottom: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 50%; max-width: 940px; padding: 14px 22px; background: rgba(8,16,28,0.95); z-index: 100; }
+        #player-bottom { bottom: 12px; left: 50%; transform: translateX(-50%); width: auto; min-width: 50%; max-width: 940px; padding: 12px 22px 16px; background: rgba(8,16,28,0.95); z-index: 100; }
         #player-top { top: 10px; left: 50%; transform: translateX(-50%); width: auto; min-width: 300px; }
         #player-left { left: 10px; top: 40%; transform: translateY(-50%); flex-direction: row; align-items: flex-start; }
         #player-left .hand { flex-direction: column; }
@@ -241,14 +241,12 @@
         /* ===== TILE SIZING: DESKTOP ONLY (min-width:1001px) ===== */
         @media screen and (min-width: 1001px) {
         .tile {
-            background: linear-gradient(160deg, #fffcf6 0%, #f2ead8 100%);
+            background: #fffcf6;
             color: #1a1a2e;
-            border: 1px solid #c8b89a;
-            border-bottom: 4px solid #9a8060;
-            border-right: 2px solid #b09070;
+            border: 1.5px solid #c8b89a;
             width: 38px; height: 52px; display: flex; justify-content: center; align-items: center;
             font-size: 56px; font-weight: 900; cursor: default; overflow: hidden; line-height: 1;
-            box-shadow: 2px 3px 6px rgba(0,0,0,0.35); font-family: Arial, sans-serif;
+            box-shadow: none; font-family: Arial, sans-serif;
             flex-shrink: 0; position: relative; border-radius: 6px; box-sizing: border-box;
             transition: transform 0.12s, box-shadow 0.12s;
         }
@@ -261,14 +259,12 @@
             .scale-glyph { transform: scale(1.45) translateY(-14%); }
             /* Base tile for mobile (overridden further by portrait/landscape queries below) */
             .tile {
-                background: linear-gradient(160deg, #fffcf6 0%, #f2ead8 100%);
+                background: #fffcf6;
                 color: #1a1a2e;
-                border: 1px solid #c8b89a;
-                border-bottom: 4px solid #9a8060;
-                border-right: 2px solid #b09070;
+                border: 1.5px solid #c8b89a;
                 display: flex; justify-content: center; align-items: center;
                 font-size: 56px; font-weight: 900; cursor: default; overflow: hidden; line-height: 1;
-                box-shadow: 2px 3px 6px rgba(0,0,0,0.35); font-family: Arial, sans-serif;
+                box-shadow: none; font-family: Arial, sans-serif;
                 flex-shrink: 0; position: relative; border-radius: 5px; box-sizing: border-box;
             }
             .tile.special-text, .tile.tile-red, .tile.tile-green { font-size: 36px; }
@@ -278,12 +274,12 @@
         @media screen and (min-width: 1001px) {
         #player-bottom .hand .tile {
             width: 38px; height: 52px; font-size: 56px; cursor: pointer;
-            border-bottom: 6px solid #059669; border-right: 3px solid #047857;
+            border: 1.5px solid #059669;
             border-radius: 7px;
         }
         #player-bottom .hand .tile:hover {
             transform: translateY(-14px) scale(1.06);
-            box-shadow: 0 18px 28px rgba(0,0,0,0.5), 0 0 16px rgba(16,185,129,0.35);
+            box-shadow: 0 0 14px rgba(16,185,129,0.5);
             border-bottom-color: var(--accent); z-index: 50;
         }
         #player-bottom .hand .tile:last-child.drawn-tile {
@@ -294,10 +290,10 @@
         .tile.selected-swap {
             transform: translateY(-18px) scale(1.06) !important;
             border-color: var(--gold) !important;
-            box-shadow: 0 18px 28px rgba(0,0,0,0.4), 0 0 22px rgba(245,158,11,0.6) !important;
+            box-shadow: 0 0 18px rgba(245,158,11,0.7) !important;
         }
         .facedown { width: 28px; height: 38px; }
-        #player-left .facedown, #player-right .facedown { width: 42px; height: 28px; }
+        #player-left .facedown, #player-right .facedown { width: 42px; height: 28px; border: 1.5px solid rgba(255,255,255,0.2); }
         .tile.special-text { font-size: 36px; font-weight: bold; color: #111; font-family: 'Noto Serif SC', sans-serif; }
         .tile-red   { font-size: 36px; color: #dc2626; font-weight: bold; font-family: 'Noto Serif SC', serif; }
         .tile-green { font-size: 36px; color: #16a34a; font-weight: bold; font-family: 'Noto Serif SC', serif; }
@@ -315,8 +311,8 @@
 
         /* Shared (all screens) */
         @keyframes drawn-glow {
-            from { box-shadow: 2px 3px 6px rgba(0,0,0,0.3), 0 0 8px rgba(245,158,11,0.3); }
-            to   { box-shadow: 2px 3px 6px rgba(0,0,0,0.3), 0 0 22px rgba(245,158,11,0.85); }
+            from { box-shadow: 0 0 6px rgba(245,158,11,0.4); }
+            to   { box-shadow: 0 0 18px rgba(245,158,11,0.9); }
         }
         .discard-zone .tile:last-child { animation: discard-drop 0.18s ease-out; }
         @keyframes discard-drop { from { transform: scale(1.4); opacity:0.5; } to { transform: scale(1); opacity:1; } }
@@ -325,11 +321,11 @@
             background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(255,255,255,0.025) 3px, rgba(255,255,255,0.025) 6px),
                 linear-gradient(135deg, #1a3a8a 0%, #0f1f60 50%, #1a3a8a 100%);
-            border: 2px solid rgba(255,255,255,0.18); border-bottom: 4px solid #08133a; color: transparent;
+            border: 1.5px solid rgba(255,255,255,0.2); color: transparent;
             border-radius: 4px;
-            box-shadow: inset 0 0 12px rgba(255,255,255,0.06), 2px 3px 6px rgba(0,0,0,0.5);
+            box-shadow: none;
         }
-        #player-left .facedown, #player-right .facedown { border-bottom: 2px solid rgba(255,255,255,0.18); border-right: 4px solid #08133a; }
+        #player-left .facedown, #player-right .facedown { border: 1.5px solid rgba(255,255,255,0.2); }
         .bai-ban { width: 62%; height: 62%; border: 3px solid #2563eb; border-radius: 3px; box-sizing: border-box; background: rgba(37,99,235,0.05); display: block; }
         .flower-num { position: absolute; top: -1px; right: -1px; background: #c8102e; color: #fff; font-size: 10px; font-weight: bold; padding: 1px 4px; border-radius: 0 4px 0 4px; line-height: 1; z-index: 5; }
         .meld { display: flex; gap: 2px; background: rgba(255,255,255,0.07); padding: 4px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
@@ -414,10 +410,9 @@
         /* ===== ACTION OVERLAY ===== */
         #action-overlay {
             position: fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-            background: rgba(0,0,0,0.55); z-index: 9999; display: none;
+            background: rgba(0,0,0,0.15); z-index: 9999; display: none;
             flex-direction: column; align-items: center;
             width: 100vw; height: 100vh; justify-content: center;
-            backdrop-filter: blur(4px);
         }
         .action-box {
             background: var(--surface); border-radius: 18px; padding: 28px 24px;
@@ -457,8 +452,8 @@
         /* ===== WIN SCREEN ===== */
         #win-screen {
             position: fixed; inset: 0; z-index: 999997; display: none;
-            background: radial-gradient(ellipse at center, rgba(200,16,46,0.12) 0%, rgba(0,0,0,0.88) 70%);
-            justify-content: center; align-items: center; backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.2);
+            justify-content: center; align-items: center;
         }
         .win-box {
             background: var(--surface); border-radius: 22px; padding: 36px 28px;
@@ -554,71 +549,82 @@
             button { padding: 14px; font-size: 14px; }
         }
 
-        /* --- PORTRAIT SPECIFIC (the centerpiece fix) --- */
+        /* --- PORTRAIT SPECIFIC --- */
         @media screen and (max-width: 1000px) and (orientation: portrait) {
-            .board { height: 72vh; min-height: 580px; }
+            /* Board: leave ~12vw at bottom for fixed hand panel */
+            .board { height: 65vh; min-height: 420px; overflow: visible; }
 
-            /* Discard area — scaled to vw so it centers properly */
+            /* Discard area */
             .discard-area {
-                width: 58vw; height: 58vw;
-                max-width: 310px; max-height: 310px;
-                top: 44%; /* Shift slightly up so bottom player doesn't overlap */
+                width: 52vw; height: 52vw;
+                max-width: 280px; max-height: 280px;
+                top: 46%;
             }
-            .discard-zone { width: 27vw; height: 17vw; padding: 2px; }
-            .discard-zone .tile { width: 4vw; height: 5.8vw; font-size: 3.6vw; margin: 1px; border-bottom-width: 2px; }
+            .discard-zone { width: 24vw; height: 15vw; padding: 2px; }
+            .discard-zone .tile { width: 3.8vw; height: 5.4vw; font-size: 9vw; margin: 1px; }
+            .discard-zone .tile.special-text,
+            .discard-zone .tile.tile-red,
+            .discard-zone .tile.tile-green { font-size: 3vw; }
             #discard-1 { right: -5vw; top: 50%; }
             #discard-3 { left: -5vw; top: 50%; }
 
-            /* AI players — push to edges */
+            /* AI players */
             #player-top { top: 2%; }
-            #player-left { left: 0; top: 33%; width: auto; }
-            #player-right { right: 0; top: 33%; width: auto; }
+            #player-left { left: 0; top: 35%; width: auto; }
+            #player-right { right: 0; top: 35%; width: auto; }
             #player-left .exposed, #player-right .exposed { flex-direction: column; gap: 2px; }
             #player-left .hand, #player-right .hand { flex-direction: column; gap: 1px; }
 
             /* AI tile sizing */
-            #player-top .facedown { width: 4.8vw; height: 6.8vw; border-width: 1px; }
-            #player-left .facedown, #player-right .facedown { width: 6.8vw; height: 4.8vw; border-width: 1px; }
-            .exposed .tile { width: 5.2vw; height: 7.4vw; font-size: 4.8vw; border-bottom-width: 1px; }
-            #player-left .exposed .tile, #player-right .exposed .tile { width: 7.4vw; height: 5.2vw; font-size: 4.8vw; border-right-width: 2px; }
+            #player-top .facedown { width: 4.7vw; height: 6.8vw; border-width: 1px; }
+            #player-left .facedown, #player-right .facedown { width: 6.8vw; height: 4.7vw; border-width: 1px; }
+            .exposed .tile { width: 5vw; height: 7.2vw; font-size: 12vw; border-width: 1px; }
+            .exposed .tile.special-text, .exposed .tile.tile-red, .exposed .tile.tile-green { font-size: 3.5vw; }
+            #player-left .exposed .tile, #player-right .exposed .tile { width: 7.2vw; height: 5vw; font-size: 12vw; border-width: 1px; }
+            #player-left .exposed .tile.special-text, #player-left .exposed .tile.tile-red, #player-left .exposed .tile.tile-green,
+            #player-right .exposed .tile.special-text, #player-right .exposed .tile.tile-red, #player-right .exposed .tile.tile-green { font-size: 3.5vw; }
 
             /* ====================================================
-               BOTTOM PLAYER — THE CORE FIX
-               Tiles MUST fit in one row, centered, at max size.
-               14 tiles * tile-width + 13 gaps ≤ 100vw
-               We use 6.5vw tiles + 0.5vw gaps = 14*6.5 + 13*0.5 = 91 + 6.5 = 97.5vw ✓
+               YOUR HAND — fixed at bottom of screen, never clipped
+               Math: 14 × 6.5vw + 13 × 0.3vw + 2 × 1vw padding = 96.9vw ✓
+               Font-size 18vw: Unicode mahjong glyphs need ~2.8× tile width
                ==================================================== */
             #player-bottom {
-                width: 100vw;
-                max-width: 100%;
-                bottom: 0;
-                left: 0;
-                transform: none;        /* OVERRIDE the desktop translateX(-50%) */
-                padding: 10px 1vw 12px;
+                position: fixed;
+                width: 100vw; max-width: 100%;
+                bottom: 0; left: 0; transform: none;
+                padding: 6px 1vw 8px;
                 box-sizing: border-box;
-                background: rgba(8,14,28,0.97);
-                box-shadow: 0 -6px 20px rgba(0,0,0,0.4);
+                background: rgba(8,14,28,0.98);
+                box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
                 border-radius: 0;
-                z-index: 100;
+                z-index: 200;
             }
             #player-bottom .hand {
                 flex-wrap: nowrap;
                 justify-content: center;
-                gap: 0.4vw;
+                gap: 0.3vw;
                 width: 100%;
             }
             #player-bottom .hand .tile {
                 width: 6.5vw;
-                height: 9.8vw;
-                font-size: 6vw;
-                border-bottom-width: 3px;
-                border-radius: 5px;
+                height: 9.4vw;
+                font-size: 18vw;
+                border-width: 1.5px;
+                border-radius: 4px;
+                cursor: pointer;
             }
+            #player-bottom .hand .tile.special-text,
+            #player-bottom .hand .tile.tile-red,
+            #player-bottom .hand .tile.tile-green { font-size: 4.7vw; }
             #player-bottom .hand .tile:last-child.drawn-tile {
-                margin-left: 1.6vw;
+                margin-left: 1.5vw;
                 border-color: var(--gold);
             }
-            #player-bottom .exposed .tile { width: 5vw; height: 7.2vw; font-size: 4.5vw; }
+            #player-bottom .exposed .tile { width: 4.8vw; height: 6.8vw; font-size: 12vw; border-width: 1px; }
+            #player-bottom .exposed .tile.special-text,
+            #player-bottom .exposed .tile.tile-red,
+            #player-bottom .exposed .tile.tile-green { font-size: 3.2vw; }
             #player-bottom .meld { padding: 2px; gap: 1px; }
         }
 
@@ -652,7 +658,7 @@
 
         /* --- LANDSCAPE OVERRIDES --- */
         @media screen and (max-width: 1000px) and (orientation: landscape) {
-            .board { height: 85vh; min-height: 320px; }
+            .board { height: 88vh; min-height: 340px; overflow: visible; }
             .discard-area { width: 48vh; height: 48vh; }
             .discard-zone { width: 22vh; height: 15vh; padding: 2px; }
             .discard-zone .tile { width: 3.2vh; height: 4.8vh; font-size: 3vh; margin: 1px; }
@@ -1124,7 +1130,17 @@
                 let standardForms = this.isStandardHu(natHand, feiCount); 
                 let is7Pairs = (hand.length === 14 && this.isSevenPairs(natHand, feiCount));
                 let validStructures = [];
-                for (let form of standardForms) validStructures.push({ is7Pairs: false, isLiguLigu: is7Pairs, formation: form });
+                for (let form of standardForms) {
+                    // Ligu Ligu: all 4 concealed sets are chows (sequences). Fei jokers ARE allowed
+                    // as substitutes in sequences. No exposed melds allowed.
+                    let isLiguLigu = (
+                        form.valid &&
+                        form.triplets === 0 &&
+                        form.chows === 4 &&
+                        natExposedSets.length === 0
+                    );
+                    validStructures.push({ is7Pairs: false, isLiguLigu: isLiguLigu, formation: form });
+                }
                 if (is7Pairs && standardForms.length === 0) validStructures.push({ is7Pairs: true, isLiguLigu: false, formation: { valid: false, triplets: 0, chows: 0, bestSets: [], pair: [] } });
                 if (validStructures.length === 0) return { isHu: false };
 
