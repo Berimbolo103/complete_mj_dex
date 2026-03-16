@@ -597,7 +597,7 @@
                 left: 0 !important;
                 transform: none !important;
                 min-width: unset !important;
-                padding: 6px 1vw !important;
+                padding: 6px 2px 8px !important;
                 box-sizing: border-box;
                 background: rgba(8,14,28,0.95);
                 box-shadow: 0 -3px 12px rgba(0,0,0,0.4);
@@ -607,30 +607,44 @@
             #player-bottom .hand {
                 flex-wrap: nowrap;
                 justify-content: center;
-                gap: 0.3vw;
+                gap: 2px;
                 width: 100%;
             }
-            /* Tile width: 6.5vw. Font: 9vw (half of old 18vw) — fills tile without being giant */
+            /*
+              14 tiles + 13 gaps of 2px = 14W + 26px = 100vw - 4px padding
+              => W = (100vw - 30px) / 14 ≈ calc((100vw - 30px) / 14)
+              Height = W * 1.4 for classic mahjong tile ratio
+            */
             #player-bottom .hand .tile {
-                width: 6.5vw;
-                height: 9.4vw;
-                font-size: 9vw;
+                width: calc((100vw - 30px) / 14);
+                height: calc((100vw - 30px) / 14 * 1.4);
+                font-size: calc((100vw - 30px) / 14 * 1.55);
                 border-width: 1.5px;
                 border-radius: 4px;
                 cursor: pointer;
+                flex-shrink: 0;
             }
             #player-bottom .hand .tile.special-text,
             #player-bottom .hand .tile.tile-red,
-            #player-bottom .hand .tile.tile-green { font-size: 4.2vw; }
+            #player-bottom .hand .tile.tile-green {
+                font-size: calc((100vw - 30px) / 14 * 0.75);
+            }
             #player-bottom .hand .tile:last-child.drawn-tile {
-                margin-left: 1.5vw;
+                margin-left: 4px;
                 border-color: var(--gold);
             }
-            /* Your exposed melds — quarter size */
-            #player-bottom .exposed .tile { width: 4.8vw; height: 6.8vw; font-size: 7vw; border-width: 1px; }
+            /* Your exposed melds — slightly smaller, same ratio */
+            #player-bottom .exposed .tile {
+                width: calc((100vw - 30px) / 14 * 0.75);
+                height: calc((100vw - 30px) / 14 * 0.75 * 1.4);
+                font-size: calc((100vw - 30px) / 14 * 0.75 * 1.55);
+                border-width: 1px;
+            }
             #player-bottom .exposed .tile.special-text,
             #player-bottom .exposed .tile.tile-red,
-            #player-bottom .exposed .tile.tile-green { font-size: 3vw; }
+            #player-bottom .exposed .tile.tile-green {
+                font-size: calc((100vw - 30px) / 14 * 0.75 * 0.75);
+            }
             #player-bottom .meld { padding: 2px; gap: 1px; }
         }
 
