@@ -263,11 +263,11 @@
                 color: #1a1a2e;
                 border: 1.5px solid #c8b89a;
                 display: flex; justify-content: center; align-items: center;
-                font-size: 56px; font-weight: 900; cursor: default; overflow: hidden; line-height: 1;
+                font-size: 9vw; font-weight: 900; cursor: default; overflow: hidden; line-height: 1;
                 box-shadow: none; font-family: Arial, sans-serif;
                 flex-shrink: 0; position: relative; border-radius: 5px; box-sizing: border-box;
             }
-            .tile.special-text, .tile.tile-red, .tile.tile-green { font-size: 36px; }
+            .tile.special-text, .tile.tile-red, .tile.tile-green { font-size: 4.5vw; }
         }
 
         /* ===== DESKTOP-ONLY TILE RULES ===== */
@@ -307,6 +307,8 @@
         #player-right .exposed .tile.tile-red, #player-right .exposed .tile.tile-green, #player-right .exposed .tile.special-text { font-size: 26px; }
         .discard-zone .tile { width: 20px; height: 28px; font-size: 30px; margin: 0; border-bottom-width: 2px; z-index: 2; }
         .discard-zone .tile.tile-red, .discard-zone .tile.tile-green, .discard-zone .tile.special-text { font-size: 18px; }
+        #player-bottom .hand .tile { width: 38px; height: 52px; font-size: 56px; }
+        #player-bottom .hand .tile.special-text, #player-bottom .hand .tile.tile-red, #player-bottom .hand .tile.tile-green { font-size: 36px; }
         } /* end desktop tile rules */
 
         /* Shared (all screens) */
@@ -588,15 +590,16 @@
             /* YOUR HAND — absolute inside board, locked to table, no floating
                Math: 14 × 6.5vw + 13 × 0.3vw gaps + 2vw padding = 96.9vw ✓ */
             #player-bottom {
-                position: absolute;
-                width: 100%;
-                bottom: 8px;
-                left: 0;
-                transform: none;
-                max-width: 100%;
-                padding: 6px 1vw;
+                position: absolute !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                transform: none !important;
+                min-width: unset !important;
+                padding: 6px 1vw !important;
                 box-sizing: border-box;
-                background: rgba(8,14,28,0.92);
+                background: rgba(8,14,28,0.95);
                 box-shadow: 0 -3px 12px rgba(0,0,0,0.4);
                 border-radius: 0 0 10px 10px;
                 z-index: 50;
