@@ -551,14 +551,13 @@
 
         /* --- PORTRAIT SPECIFIC --- */
         @media screen and (max-width: 1000px) and (orientation: portrait) {
-            /* Board: leave ~12vw at bottom for fixed hand panel */
-            .board { height: 65vh; min-height: 420px; overflow: visible; }
+            .board { height: 75vh; min-height: 500px; overflow: visible; }
 
             /* Discard area */
             .discard-area {
                 width: 52vw; height: 52vw;
                 max-width: 280px; max-height: 280px;
-                top: 46%;
+                top: 44%;
             }
             .discard-zone { width: 24vw; height: 15vw; padding: 2px; }
             .discard-zone .tile { width: 3.8vw; height: 5.4vw; font-size: 9vw; margin: 1px; }
@@ -575,30 +574,32 @@
             #player-left .exposed, #player-right .exposed { flex-direction: column; gap: 2px; }
             #player-left .hand, #player-right .hand { flex-direction: column; gap: 1px; }
 
-            /* AI tile sizing */
+            /* AI facedown tiles — small */
             #player-top .facedown { width: 4.7vw; height: 6.8vw; border-width: 1px; }
             #player-left .facedown, #player-right .facedown { width: 6.8vw; height: 4.7vw; border-width: 1px; }
-            .exposed .tile { width: 5vw; height: 7.2vw; font-size: 12vw; border-width: 1px; }
-            .exposed .tile.special-text, .exposed .tile.tile-red, .exposed .tile.tile-green { font-size: 3.5vw; }
-            #player-left .exposed .tile, #player-right .exposed .tile { width: 7.2vw; height: 5vw; font-size: 12vw; border-width: 1px; }
-            #player-left .exposed .tile.special-text, #player-left .exposed .tile.tile-red, #player-left .exposed .tile.tile-green,
-            #player-right .exposed .tile.special-text, #player-right .exposed .tile.tile-red, #player-right .exposed .tile.tile-green { font-size: 3.5vw; }
 
-            /* ====================================================
-               YOUR HAND — fixed at bottom of screen, never clipped
-               Math: 14 × 6.5vw + 13 × 0.3vw + 2 × 1vw padding = 96.9vw ✓
-               Font-size 18vw: Unicode mahjong glyphs need ~2.8× tile width
-               ==================================================== */
+            /* AI exposed melds — quarter size for animals/flowers, normal for number tiles */
+            .exposed .tile { width: 5vw; height: 7.2vw; font-size: 9vw; border-width: 1px; }
+            .exposed .tile.special-text, .exposed .tile.tile-red, .exposed .tile.tile-green { font-size: 3vw; }
+            #player-left .exposed .tile, #player-right .exposed .tile { width: 7.2vw; height: 5vw; font-size: 9vw; border-width: 1px; }
+            #player-left .exposed .tile.special-text, #player-left .exposed .tile.tile-red, #player-left .exposed .tile.tile-green,
+            #player-right .exposed .tile.special-text, #player-right .exposed .tile.tile-red, #player-right .exposed .tile.tile-green { font-size: 3vw; }
+
+            /* YOUR HAND — absolute inside board, locked to table, no floating
+               Math: 14 × 6.5vw + 13 × 0.3vw gaps + 2vw padding = 96.9vw ✓ */
             #player-bottom {
-                position: fixed;
-                width: 100vw; max-width: 100%;
-                bottom: 0; left: 0; transform: none;
-                padding: 6px 1vw 8px;
+                position: absolute;
+                width: 100%;
+                bottom: 8px;
+                left: 0;
+                transform: none;
+                max-width: 100%;
+                padding: 6px 1vw;
                 box-sizing: border-box;
-                background: rgba(8,14,28,0.98);
-                box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
-                border-radius: 0;
-                z-index: 200;
+                background: rgba(8,14,28,0.92);
+                box-shadow: 0 -3px 12px rgba(0,0,0,0.4);
+                border-radius: 0 0 10px 10px;
+                z-index: 50;
             }
             #player-bottom .hand {
                 flex-wrap: nowrap;
@@ -606,25 +607,27 @@
                 gap: 0.3vw;
                 width: 100%;
             }
+            /* Tile width: 6.5vw. Font: 9vw (half of old 18vw) — fills tile without being giant */
             #player-bottom .hand .tile {
                 width: 6.5vw;
                 height: 9.4vw;
-                font-size: 18vw;
+                font-size: 9vw;
                 border-width: 1.5px;
                 border-radius: 4px;
                 cursor: pointer;
             }
             #player-bottom .hand .tile.special-text,
             #player-bottom .hand .tile.tile-red,
-            #player-bottom .hand .tile.tile-green { font-size: 4.7vw; }
+            #player-bottom .hand .tile.tile-green { font-size: 4.2vw; }
             #player-bottom .hand .tile:last-child.drawn-tile {
                 margin-left: 1.5vw;
                 border-color: var(--gold);
             }
-            #player-bottom .exposed .tile { width: 4.8vw; height: 6.8vw; font-size: 12vw; border-width: 1px; }
+            /* Your exposed melds — quarter size */
+            #player-bottom .exposed .tile { width: 4.8vw; height: 6.8vw; font-size: 7vw; border-width: 1px; }
             #player-bottom .exposed .tile.special-text,
             #player-bottom .exposed .tile.tile-red,
-            #player-bottom .exposed .tile.tile-green { font-size: 3.2vw; }
+            #player-bottom .exposed .tile.tile-green { font-size: 3vw; }
             #player-bottom .meld { padding: 2px; gap: 1px; }
         }
 
