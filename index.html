@@ -256,7 +256,7 @@
 
         /* Mobile tile glyph shift */
         @media screen and (max-width: 1000px) {
-            .scale-glyph { transform: scale(1.45) translateY(-14%); }
+            .scale-glyph { transform: none; }
             /* Base tile for mobile (overridden further by portrait/landscape queries below) */
             .tile {
                 background: #fffcf6;
@@ -587,8 +587,9 @@
             #player-left .exposed .tile.special-text, #player-left .exposed .tile.tile-red, #player-left .exposed .tile.tile-green,
             #player-right .exposed .tile.special-text, #player-right .exposed .tile.tile-red, #player-right .exposed .tile.tile-green { font-size: 3vw; }
 
-            /* YOUR HAND — absolute inside board, locked to table, no floating
-               Math: 14 × 6.5vw + 13 × 0.3vw gaps + 2vw padding = 96.9vw ✓ */
+            /* YOUR HAND — fits 14 tiles exactly across full screen width
+               W = (100vw - 30px) / 14  |  H = W * 1.4  |  font-size = H
+               overflow:hidden clips the glyph flush to the tile border — no corners sticking out */
             #player-bottom {
                 position: absolute !important;
                 width: 100% !important;
@@ -610,40 +611,45 @@
                 gap: 2px;
                 width: 100%;
             }
-            /*
-              14 tiles + 13 gaps of 2px = 14W + 26px = 100vw - 4px padding
-              => W = (100vw - 30px) / 14 ≈ calc((100vw - 30px) / 14)
-              Height = W * 1.4 for classic mahjong tile ratio
-            */
             #player-bottom .hand .tile {
                 width: calc((100vw - 30px) / 14);
                 height: calc((100vw - 30px) / 14 * 1.4);
-                font-size: calc((100vw - 30px) / 14 * 1.55);
+                font-size: calc((100vw - 30px) / 14 * 1.4);
+                line-height: 1;
+                overflow: hidden;
                 border-width: 1.5px;
                 border-radius: 4px;
                 cursor: pointer;
                 flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             #player-bottom .hand .tile.special-text,
             #player-bottom .hand .tile.tile-red,
             #player-bottom .hand .tile.tile-green {
-                font-size: calc((100vw - 30px) / 14 * 0.75);
+                font-size: calc((100vw - 30px) / 14 * 0.65);
             }
             #player-bottom .hand .tile:last-child.drawn-tile {
                 margin-left: 4px;
                 border-color: var(--gold);
             }
-            /* Your exposed melds — slightly smaller, same ratio */
+            /* Exposed melds — 75% scale, same ratio */
             #player-bottom .exposed .tile {
                 width: calc((100vw - 30px) / 14 * 0.75);
                 height: calc((100vw - 30px) / 14 * 0.75 * 1.4);
-                font-size: calc((100vw - 30px) / 14 * 0.75 * 1.55);
+                font-size: calc((100vw - 30px) / 14 * 0.75 * 1.4);
+                line-height: 1;
+                overflow: hidden;
                 border-width: 1px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             #player-bottom .exposed .tile.special-text,
             #player-bottom .exposed .tile.tile-red,
             #player-bottom .exposed .tile.tile-green {
-                font-size: calc((100vw - 30px) / 14 * 0.75 * 0.75);
+                font-size: calc((100vw - 30px) / 14 * 0.75 * 0.65);
             }
             #player-bottom .meld { padding: 2px; gap: 1px; }
         }
