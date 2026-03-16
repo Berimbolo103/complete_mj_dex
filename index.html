@@ -255,7 +255,7 @@
         /* Scale-glyph hack */
         .scale-glyph {
             display: inline-block;
-            transform: scale(1.45) translateY(2%);
+            transform: scale(1.45) translateY(-14%);
             line-height: 1;
         }
 
@@ -604,6 +604,34 @@
             #player-bottom .meld { padding: 2px; gap: 1px; }
         }
 
+        /* ===== SWAP CONFIRM BAR ===== */
+        #swap-confirm-bar {
+            display: none;
+            width: 100%;
+            flex-direction: row; align-items: center; justify-content: center; gap: 14px;
+            background: rgba(245,158,11,0.1); border: 1px solid var(--gold);
+            border-radius: 10px; padding: 8px 14px;
+            box-sizing: border-box;
+        }
+        .swap-count {
+            font-family: 'Space Mono', monospace; font-size: 12px; color: var(--gold);
+            font-weight: 700; flex: 1; text-align: center;
+        }
+        .swap-confirm-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none; border-radius: 8px; color: #fff;
+            padding: 9px 18px; font-size: 13px; font-weight: 700;
+            cursor: pointer; font-family: 'Inter', sans-serif;
+            transition: opacity 0.2s, transform 0.15s;
+            box-shadow: 0 3px 10px rgba(16,185,129,0.4);
+            flex-shrink: 0; width: auto;
+        }
+        .swap-confirm-btn:not(:disabled):hover { transform: scale(1.04); }
+        @media screen and (max-width: 1000px) {
+            .swap-count { font-size: 11px; }
+            .swap-confirm-btn { padding: 8px 14px; font-size: 12px; }
+        }
+
         /* --- LANDSCAPE OVERRIDES --- */
         @media screen and (max-width: 1000px) and (orientation: landscape) {
             .board { height: 85vh; min-height: 320px; }
@@ -768,6 +796,10 @@
                     <button class="btn-hu" onclick="forceHuCheck()">和 HU</button>
                     <button style="background:#3b82f6;color:#fff;" onclick="scanWaitProjections()">⧖ TING</button>
                     <button style="background:#10b981;color:#fff;" onclick="showDiscardAssist()">◈ DISCARD</button>
+                </div>
+                <div id="swap-confirm-bar">
+                    <span class="swap-count">0 / 3 selected</span>
+                    <button class="swap-confirm-btn" onclick="executeSwap()" disabled>CONFIRM SWAP →</button>
                 </div>
                 <div class="exposed" id="exposed-0"></div>
                 <div class="hand" id="hand-0"></div>
@@ -1407,7 +1439,12 @@
             else { gameState = 'SWAP'; renderAll(); startSwapPhase(); }
         }
 
-        function startSwapPhase() { isHumanTurn = true; document.getElementById('status').innerHTML = `<span class="status-dot" style="background:var(--gold)"></span> SWAP PHASE ${swapCount+1}/2 — Pick 3 Tiles to Swap Left`; }
+        function startSwapPhase() {
+            isHumanTurn = true;
+            document.getElementById('status').innerHTML = `<span class="status-dot" style="background:var(--gold)"></span> SWAP PHASE ${swapCount+1}/2 — Pick 3 Tiles to Swap Left`;
+            let bar = document.getElementById('swap-confirm-bar');
+            if (bar) { bar.style.display = 'none'; }
+        }
 
         function toggleSwapSelection(index) {
             if (gameState !== 'SWAP' || !isHumanTurn) return;
@@ -1415,7 +1452,25 @@
             let pos = selectedSwaps.indexOf(index);
             if (pos !== -1) { selectedSwaps.splice(pos, 1); } else if (selectedSwaps.length < 3) { selectedSwaps.push(index); }
             renderAll();
-            if (selectedSwaps.length === 3) showOverlay(`<button class="btn-hu" onclick="executeSwap()">CONFIRM SWAP</button>`, null, `CONFIRM 3 TILES`); else hideOverlay();
+            updateSwapBar();
+        }
+
+        function updateSwapBar() {
+            let bar = document.getElementById('swap-confirm-bar');
+            if (!bar) return;
+            let n = selectedSwaps.length;
+            if (n > 0) {
+                bar.style.display = 'flex';
+                bar.querySelector('.swap-count').textContent = n === 3
+                    ? '✓ 3 selected — tap to change, or confirm'
+                    : `${n} / 3 — tap tiles to select`;
+            } else {
+                bar.style.display = 'none';
+            }
+            let btn = bar.querySelector('.swap-confirm-btn');
+            btn.disabled = (n !== 3);
+            btn.style.opacity = n === 3 ? '1' : '0.4';
+            btn.style.pointerEvents = n === 3 ? 'auto' : 'none';
         }
 
         function getAiSwap(aiIndex) {
@@ -1449,7 +1504,9 @@
         }
 
         function executeSwap() {
-            hideOverlay(); isHumanTurn = false; selectedSwaps.sort((a,b)=>b-a);
+            let bar = document.getElementById('swap-confirm-bar');
+            if (bar) bar.style.display = 'none';
+            isHumanTurn = false; selectedSwaps.sort((a,b)=>b-a);
             let p0_out = []; selectedSwaps.forEach(idx => p0_out.push(hands[0].splice(idx, 1)[0]));
             let ai_out = {1: getAiSwap(1), 2: getAiSwap(2), 3: getAiSwap(3)};
             hands[3].push(...p0_out); hands[2].push(...ai_out[3]); hands[1].push(...ai_out[2]); hands[0].push(...ai_out[1]);
