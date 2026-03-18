@@ -462,38 +462,47 @@
         /* ===== ACTION OVERLAY ===== */
         #action-overlay {
             position: fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-            background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.45);
             z-index: 9999; display: none;
             flex-direction: column; align-items: center;
-            width: 100vw; height: 100vh; justify-content: center;
+            width: 100vw; height: 100vh; justify-content: flex-end;
         }
         .action-box {
             background: linear-gradient(160deg, rgba(17,24,39,0.99) 0%, rgba(24,18,52,0.99) 100%);
-            border-radius: 20px; padding: 28px 24px;
-            text-align: center; box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(99,102,241,0.2);
-            max-width: 92vw; max-height: 88vh; overflow-y: auto;
-            margin-bottom: 12vh;
-            animation: overlay-pop 0.22s cubic-bezier(0.34,1.56,0.64,1);
+            border-radius: 20px 20px 0 0; padding: 16px 14px 20px;
+            text-align: center; box-shadow: 0 -8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.2);
+            max-width: 100vw; width: 100%; max-height: 55vh; overflow-y: auto;
+            animation: overlay-slide-up 0.25s cubic-bezier(0.34,1.56,0.64,1);
         }
+        @keyframes overlay-slide-up { from{opacity:0;transform:translateY(60px)} to{opacity:1;transform:translateY(0)} }
         @keyframes overlay-pop { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
-        .overlay-title { font-size: 11px; font-weight: 700; color: var(--gold); margin-bottom: 16px; text-align: center; width: 100%; text-transform: uppercase; letter-spacing: 3px; font-family: 'Space Mono', monospace; }
-        .overlay-target-tile { margin: 12px 0 20px 0; display: flex; justify-content: center; align-items: center; }
+        /* Desktop: keep overlay as bottom sheet too for consistency */
+        @media screen and (min-width: 1001px) {
+            .action-box {
+                border-radius: 20px 20px 0 0;
+                max-width: 600px;
+                margin: 0 auto;
+                width: 600px;
+            }
+        }
+        .overlay-title { font-size: 10px; font-weight: 700; color: var(--gold); margin-bottom: 8px; text-align: center; width: 100%; text-transform: uppercase; letter-spacing: 2px; font-family: 'Space Mono', monospace; }
+        .overlay-target-tile { margin: 4px 0 10px 0; display: flex; justify-content: center; align-items: center; }
         .overlay-target-tile .tile {
-            width: 60px !important; height: 84px !important; font-size: 60px !important;
-            border-radius: 8px !important; border: 2px solid var(--gold) !important;
-            box-shadow: 0 0 20px rgba(245,158,11,0.5), 0 4px 16px rgba(0,0,0,0.4) !important;
+            width: 44px !important; height: 62px !important; font-size: 44px !important;
+            border-radius: 6px !important; border: 2px solid var(--gold) !important;
+            box-shadow: 0 0 16px rgba(245,158,11,0.4), 0 4px 12px rgba(0,0,0,0.4) !important;
             cursor: default !important;
         }
         .overlay-target-tile .tile img { width:100%!important; height:100%!important; object-fit:contain!important; display:block!important; }
         .overlay-target-tile .tile .tile-glyph-single { font-size:0.85em!important; }
         .overlay-target-tile .tile .tile-glyph-top,
         .overlay-target-tile .tile .tile-glyph-bot   { font-size:0.62em!important; }
-        .action-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+        .action-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
 
         .terminal-log {
-            background: rgba(10,15,30,0.8); color: var(--text); border-radius: 10px; padding: 16px;
+            background: rgba(10,15,30,0.8); color: var(--text); border-radius: 10px; padding: 12px 14px;
             border: 1px solid rgba(255,255,255,0.08); width: 100%; box-sizing: border-box;
-            margin-bottom: 16px; text-align: left; font-size: 13px; line-height: 1.8;
+            margin-bottom: 10px; text-align: left; font-size: 12px; line-height: 1.7;
             font-family: 'Space Mono', monospace;
         }
 
@@ -509,12 +518,49 @@
         button:active { transform: scale(0.97); }
         .btn-hu { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 14px rgba(16,185,129,0.4); }
         .btn-hu:hover { box-shadow: 0 6px 20px rgba(16,185,129,0.5); }
-        .btn-tool { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.12); box-shadow: none; }
+        .btn-tool { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid rgba(255,255,255,0.12); box-shadow: none; padding: 10px 12px !important; font-size: 12px !important; }
         .btn-tool:hover { border-color: var(--accent); background: rgba(99,102,241,0.1); }
-        .cancel-btn { background: rgba(255,255,255,0.04) !important; color: var(--muted) !important; box-shadow: none !important; width: 100%; margin-top: 10px; border: 1px solid rgba(255,255,255,0.08) !important; }
+        .cancel-btn { background: rgba(255,255,255,0.04) !important; color: var(--muted) !important; box-shadow: none !important; width: 100%; margin-top: 8px; padding: 10px !important; font-size: 12px !important; border: 1px solid rgba(255,255,255,0.08) !important; }
         .cancel-btn:hover { color: var(--text) !important; background: rgba(255,255,255,0.08) !important; }
 
-        /* ===== WIN SCREEN ===== */
+        /* ===== TOOL PANEL TILE SIZES (Discard Assist / Ting) ===== */
+        .tool-tiles-row {
+            display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-start; align-items: center;
+        }
+        /* Scale down tiles inside tool panels */
+        .tool-tiles-row .tile,
+        .tool-tile-sm .tile {
+            width: 28px !important; height: 40px !important;
+            font-size: 28px !important; flex-shrink: 0 !important;
+            border-radius: 4px !important; overflow: hidden !important;
+        }
+        .tool-tiles-row .tile img,
+        .tool-tile-sm .tile img { width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; }
+        .tool-tiles-row .tile .tile-glyph-single { font-size: 0.85em !important; }
+        .tool-tiles-row .tile .tile-glyph-top, .tool-tiles-row .tile .tile-glyph-bot { font-size: 0.62em !important; }
+
+        /* Assist row layout */
+        .assist-row {
+            display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+            background: var(--bg2); padding: 8px 10px;
+            border-left: 3px solid #10b981; border-radius: 6px;
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+        .assist-discard { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
+        .assist-arrow { color: var(--muted); font-size: 14px; flex-shrink: 0; padding: 0 4px; }
+        .assist-waits { display: flex; flex-direction: column; gap: 3px; flex-grow: 1; min-width: 0; }
+        .assist-label { font-size: 9px; color: var(--muted); font-weight: 700; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Claim buttons in overlay — compact tile previews */
+        .btn-tool .tile {
+            width: 26px !important; height: 36px !important;
+            font-size: 26px !important; border-radius: 3px !important; overflow: hidden !important;
+        }
+        .btn-tool .tile img { width: 100% !important; height: 100% !important; object-fit: contain !important; display: block !important; }
+        .btn-tool .tile .tile-glyph-single { font-size: 0.85em !important; }
+        .btn-tool .tile .tile-glyph-top, .btn-tool .tile .tile-glyph-bot { font-size: 0.62em !important; }
+
+        /* ===== TOOL PANEL TILE SIZES ===== */
         #win-screen {
             position: fixed; inset: 0; z-index: 999997; display: none;
             background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);
@@ -694,8 +740,10 @@
             .menu-btn { font-size: 14px; padding: 14px 12px; }
             .mode-label { font-size: 14px; }
             .mode-icon { font-size: 22px; }
-            .action-box { padding: 20px 14px; width: 96vw; margin-bottom: 4vh; }
-            button { padding: 14px; font-size: 14px; }
+            .action-box { padding: 14px 10px 16px; width: 100%; max-width: 100%; border-radius: 20px 20px 0 0; max-height: 52vh; }
+            button { padding: 12px; font-size: 13px; }
+            .btn-tool { padding: 10px 8px !important; font-size: 12px !important; }
+            .btn-hu { padding: 12px 16px !important; }
 
             /* Win screen — compact tiles */
             .win-hand .tile {
@@ -2243,9 +2291,17 @@
             return `<div class="tile ${extraClass}" style="${isDepleted ? 'opacity:0.6;' : ''}">${content}</div>`;
         }
 
-        function renderMeldHtml(meldString) {
+        function renderMeldHtml(meldString, playerIndex = -1) {
             let cleanString = meldString.replace(/\*/g, ''); let isAnKong = meldString.includes('*');
-            if(isAnKong && meldString.length > 4) return `<div class="meld"><div class="facedown"></div><div class="facedown"></div><div class="facedown"></div><div class="facedown"></div></div>`;
+            // An Kong (concealed kong): show face-down for AI, but face-up for human player (index 0)
+            if(isAnKong && meldString.length > 4) {
+                if (playerIndex === 0) {
+                    // Human's own an gang — show tiles face up so player can see them
+                    let tilesHtml = Array.from(cleanString).map(char => getTileHTML(char, true)).join('');
+                    return `<div class="meld" style="border-color: rgba(99,102,241,0.5); background: rgba(99,102,241,0.1);">${tilesHtml}</div>`;
+                }
+                return `<div class="meld"><div class="facedown"></div><div class="facedown"></div><div class="facedown"></div><div class="facedown"></div></div>`;
+            }
             let tilesHtml = Array.from(cleanString).map(char => getTileHTML(char, true)).join(''); return `<div class="meld">${tilesHtml}</div>`;
         }
 
@@ -2256,7 +2312,7 @@
                 if (revealHands) { handHtml = hands[i].map(t => getTileHTML(t)).join(''); } 
                 else { handHtml = hands[i].map(() => `<div class="facedown"></div>`).join(''); }
                 document.getElementById(`hand-${i}`).innerHTML = handHtml; 
-                document.getElementById(`exposed-${i}`).innerHTML = exposed[i].map(renderMeldHtml).join(''); 
+                document.getElementById(`exposed-${i}`).innerHTML = exposed[i].map(m => renderMeldHtml(m, i)).join(''); 
             }
             const humanHand = document.getElementById('hand-0'); humanHand.innerHTML = '';
             // Apply sort mode to display order (does not mutate actual hand array)
@@ -2280,7 +2336,7 @@
                 };
                 humanHand.appendChild(actualDiv);
             });
-            document.getElementById('exposed-0').innerHTML = exposed[0].map(renderMeldHtml).join('');
+            document.getElementById('exposed-0').innerHTML = exposed[0].map(m => renderMeldHtml(m, 0)).join('');
             // Apply hints and safe tile indicators after DOM is updated
             if (hintMode && isHumanTurn && gameState === 'PLAY') {
                 let tileEls = Array.from(humanHand.querySelectorAll('.tile'));
@@ -2528,9 +2584,9 @@
             } else {
                 let visualTiles = waits.map(c => { return getTileHTML(c, false, false, countVisibleInHand(c, currentHand) >= 4); }).join('');
                 let disclaimer = humanJustDrawn ? "<br><br><span style='font-size:11px; color:#64748b;'>(Projection excludes currently drawn tile)</span>" : "";
-                contentHtml = `<div class="terminal-log" style="color: #2563eb; border-color: #bfdbfe; background: #eff6ff;"><strong>TILES REQUIRED FOR MAHJONG (TING)</strong>${disclaimer}</div><div style="display:flex; gap:8px; justify-content:center; margin: 20px 0; flex-wrap: wrap; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">${visualTiles}</div>`;
+                contentHtml = `<div class="terminal-log" style="color: #2563eb; border-color: #bfdbfe; background: #eff6ff;"><strong>TILES REQUIRED FOR MAHJONG (TING)</strong>${disclaimer}</div><div class="tool-tiles-row">${visualTiles}</div>`;
             }
-            contentHtml += `<button class="cancel-btn" onclick="hideOverlay()">CLOSE TOOL</button>`; showOverlay(contentHtml, null, "TING WAITS");
+            contentHtml += `<button class="cancel-btn" onclick="hideOverlay()">CLOSE</button>`; showOverlay(contentHtml, null, "TING WAITS");
         }
 
         function showDiscardAssist() {
@@ -2545,15 +2601,13 @@
                 assistHtml = `<div class="terminal-log" style="text-align:center; color:#ef4444; border-color:#ef4444; background: #fef2f2;"><strong>NO VIABLE DISCARDS</strong><br>Cannot reach Ting this turn.</div>`;
             } else {
                 results.sort((a, b) => b.waits.length - a.waits.length);
-                assistHtml += `<div class="terminal-log" style="color: #10b981; border-color:#6ee7b7; background: #ecfdf5;"><strong>OPTIMAL DISCARDS FOUND:</strong><br><br>`;
                 results.forEach(res => {
                     let discardTileHtml = getTileHTML(res.discard);
                     let waitTilesHtml = res.waits.map(w => { let postDiscardHand = [...currentHand]; postDiscardHand.splice(postDiscardHand.indexOf(res.discard), 1); return getTileHTML(w, false, false, countVisibleInHand(w, postDiscardHand) >= 4); }).join('');
-                    assistHtml += `<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; background: #fff; padding: 10px; border-left: 6px solid #10b981; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;"><div style="display: flex; flex-direction: column; align-items: center; width: 60px;"><span style="font-size:10px; margin-bottom:4px; color:#64748b; font-weight:bold;">DISCARD</span>${discardTileHtml}</div><div style="color: #334155; font-size: 20px; padding: 0 15px;"> ➔ </div><div style="display: flex; flex-wrap: wrap; gap: 4px; flex-grow: 1; justify-content: flex-start; padding-left: 10px;"><span style="font-size:10px; margin-bottom:4px; color:#64748b; width: 100%; font-weight:bold;">WAITING FOR (${res.waits.length} TILES)</span>${waitTilesHtml}</div></div>`;
+                    assistHtml += `<div class="assist-row"><div class="assist-discard"><span class="assist-label">DISCARD</span><div class="tool-tile-sm">${discardTileHtml}</div></div><div class="assist-arrow">➔</div><div class="assist-waits"><span class="assist-label">WAIT (${res.waits.length})</span><div class="tool-tiles-row">${waitTilesHtml}</div></div></div>`;
                 });
-                assistHtml += `</div>`;
             }
-            assistHtml += `<button class="cancel-btn" onclick="hideOverlay()">CLOSE TOOL</button>`; showOverlay(assistHtml, null, "DISCARD ASSIST");
+            assistHtml += `<button class="cancel-btn" onclick="hideOverlay()">CLOSE</button>`; showOverlay(assistHtml, null, "DISCARD ASSIST");
         }
     </script>
 </body>
