@@ -931,6 +931,10 @@
                 <span class="mode-icon">🀄</span>
                 <div><div class="mode-label" style="color:#10b981">SIMPLE OLD SCHOOL</div><div class="mode-desc">8 Flowers · No Animals/Jokers/Swaps · 144 Tiles</div></div>
             </button>
+            <button class="menu-btn" onclick="selectMode('CLASSIC')">
+                <span class="mode-icon">🐱</span>
+                <div><div class="mode-label" style="color:#a78bfa">CLASSIC OLD TIMES</div><div class="mode-desc">4 Animals · 8 Flowers · No Jokers/Swaps · 156 Tiles</div></div>
+            </button>
             <button class="menu-btn" onclick="selectMode('NORMAL')">
                 <span class="mode-icon">🎴</span>
                 <div><div class="mode-label" style="color:#3b82f6">STANDARD GAME</div><div class="mode-desc">4 Animals · 4 Jokers · 8 Flowers · Swap 3 · 152 Tiles</div></div>
@@ -1949,8 +1953,10 @@
                 [...DOTS, ...BAMS, ...CHARS, ...WINDS, ...DRAGONS].forEach(t => { for(let i=0; i<4; i++) mainDeck.push(t); }); for(let i=0; i<4; i++) mainDeck.push(FEI); FLOWERS.forEach(f => mainDeck.push(f)); ANIMALS.forEach(a => mainDeck.push(a));
             } else if (activeMode === '12FEI') {
                 [...DOTS, ...BAMS, ...CHARS, ...WINDS, ...DRAGONS].forEach(t => { for(let i=0; i<4; i++) mainDeck.push(t); }); for(let i=0; i<12; i++) mainDeck.push(FEI); FLOWERS.forEach(f => mainDeck.push(f)); ANIMALS.forEach(a => mainDeck.push(a));
+            } else if (activeMode === 'CLASSIC') {
+                [...DOTS, ...BAMS, ...CHARS, ...WINDS, ...DRAGONS].forEach(t => { for(let i=0; i<4; i++) mainDeck.push(t); }); FLOWERS.forEach(f => mainDeck.push(f)); ANIMALS.forEach(a => mainDeck.push(a));
             } else if (activeMode === 'SIMPLE') {
-                [...DOTS, ...BAMS, ...CHARS, ...WINDS, ...DRAGONS].forEach(t => { for(let i=0; i<4; i++) mainDeck.push(t); }); FLOWERS.forEach(f => mainDeck.push(f)); 
+                [...DOTS, ...BAMS, ...CHARS, ...WINDS, ...DRAGONS].forEach(t => { for(let i=0; i<4; i++) mainDeck.push(t); }); FLOWERS.forEach(f => mainDeck.push(f));
             }
             for (let i = mainDeck.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [mainDeck[i], mainDeck[j]] = [mainDeck[j], mainDeck[i]]; }
         }
@@ -2048,7 +2054,7 @@
 
             if (checkInstantFeiWin()) return;
 
-            if (activeMode === 'QYS' || activeMode === 'SIMPLE') { gameState = 'PLAY'; renderAll(); if (turn === 0) startHumanTurn(); else doAiTurn(); } 
+            if (activeMode === 'QYS' || activeMode === 'SIMPLE' || activeMode === 'CLASSIC') { gameState = 'PLAY'; renderAll(); if (turn === 0) startHumanTurn(); else doAiTurn(); } 
             else { gameState = 'SWAP'; renderAll(); startSwapPhase(); }
         }
 
